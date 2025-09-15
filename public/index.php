@@ -16,10 +16,11 @@ switch ($uri) {
 
     case '/':
         if ($requestMethod == 'GET') {
-            require_once __DIR__ . '/../views/semLogin.php';
+            require_once __DIR__ . '/../src/Views/semLogin.php';
         } elseif ($requestMethod == 'POST') {
-            require_once __DIR__ . '/../views/comLogin.php';
+            require_once __DIR__ . '/../src/Views/comLogin.php';
         }
+        break;
 
     case '/cadastro':
         if ($requestMethod == 'GET') {

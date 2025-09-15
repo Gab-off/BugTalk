@@ -10,12 +10,12 @@ class Usuario
 
     public function __construct()
     {
-        $uri = 'neo4j://localhost:7687';
+        $uri = 'neo4j://127.0.0.1:7687';
         $user = 'neo4j';
         $password = 'password';
 
         $this->client = ClientBuilder::create()
-            ->withDriver('default', $uri, \Laudis\Neo4j\Neo4j\Authentication\Authenticate::basic($user, $password))
+            ->withDriver('default', $uri, \Laudis\Neo4j\Authentication\Authenticate::basic($user, $password))
             ->build();
     }
 
@@ -48,8 +48,13 @@ class Usuario
      */
     public function findByEmail(string $email)
     {
-        $query = 'MATCH (n:Usuario) WHERE m.email = $email RETURN n LIMIT 1';
+        $query = 'MATCH (n:Usuario) WHERE n.email = $email RETURN n LIMIT 1';
         $result = $this->client->run($query, ['email' => $email]);
+
+        if ($result->isEmpty()) {
+            return null;
+        }
+
         return $result->first();
     }
 

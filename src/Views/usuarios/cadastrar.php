@@ -1,4 +1,4 @@
-<?php require_once '../layouts/header.php'; ?>
+<?php require_once __DIR__ . '/../layouts/header.php'; ?>
     <body class="cadastrar_bg">
     <main class="container main_form">
         <div class="form_container">
@@ -28,4 +28,4 @@
     </main>
     </body>
 
-<?php require_once '../layouts/footer.php'; ?>
+<?php require_once __DIR__ . '/../layouts/footer.php'; ?>

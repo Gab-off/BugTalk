@@ -1,0 +1,56 @@
+@use 'variables';
+
+.cadastrar_bg {
+  background: variables.$gradient-cadastro_bg;
+}
+
+.main_form {
+  color: white;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.form_container {
+  width: 100%;
+  max-width: 700px;
+  padding: 1rem 2rem;
+  text-align: center;
+}
+
+.form_input {
+  @include variables.form-input;
+  width: 100%;
+  max-width: 450px;
+  padding: 1rem;
+  margin: 0.5rem 0;
+  font-size: medium;
+  border: none;
+  border-radius: 0.5rem;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.form_input::placeholder {
+  color: variables.$form-input_fontColor;
+}
+
+.form_input:focus {
+  @include variables.form-input_focus;
+}
+
+.form_input:focus::placeholder {
+  color: variables.$form-input_fontColor_alternate
+}
+
+.form-button {
+  @include variables.form-button;
+  transition: all 0.3s ease;
+}
+
+.form-button:hover {
+  @include variables.form-button_hover
+}
+

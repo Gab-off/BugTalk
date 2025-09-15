@@ -3,5 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Bugtalk Fórum</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/public/css/style.css">
+
+
+
+
 </head>

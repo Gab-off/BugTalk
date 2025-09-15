@@ -1,0 +1,29 @@
+<?php require_once __DIR__ . '/../layouts/header.php'; ?>
+
+<body class="flex items-center justify-center min-h-screen">
+<div class="bg-transparent text-white w-full max-w-md p-8">
+    <h1 class="text-4xl font-extrabold text-center mb-8">CRIAR CONTA</h1>
+
+    <?php if (isset($erro)): // Se o Controlador definiu uma variável $erro, mostre-a aqui ?>
+    <div class="bg-red-500/50 text-white p-3 rounded mb-4 text-center"><?= htmlspecialchars($erro) ?></div>
+    <?php endif; ?>
+
+    <form action="/cadastro" method="POST">
+        <div class="mb-4">
+            <input type="text" name="nome" placeholder="Nome completo" required class="w-full p-3 rounded bg-white/10 border border-white/20 placeholder-gray-300 focus:outline-none focus:border-white">
+        </div>
+        <div class="mb-4">
+            <input type="email" name="email" placeholder="E-mail" required class="w-full p-3 rounded bg-white/10 border border-white/20 placeholder-gray-300 focus:outline-none focus:border-white">
+        </div>
+        <div class="mb-6">
+            <input type="password" name="senha" placeholder="Senha" required class="w-full p-3 rounded bg-white/10 border border-white/20 placeholder-gray-300 focus:outline-none focus:border-white">
+        </div>
+        <button type="submit" class="w-full bg-cyan-600 hover:bg-cyan-700 font-bold py-3 px-4 rounded transition-colors">CADASTRAR</button>
+    </form>
+    <p class="text-center mt-6">
+        Já tem uma conta? <a href="/login" class="form-link">Entre aqui</a>
+    </p>
+</div>
+</body>
+
+<?php require_once __DIR__ . '/../layouts/footer.php'; ?>

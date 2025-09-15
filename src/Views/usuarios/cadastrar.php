@@ -1,6 +1,31 @@
 <?php require_once '../layouts/header.php'; ?>
-<body class="">
-<h1>Testando</h1>
-</body>
+    <body class="cadastrar_bg">
+    <main class="container main_form">
+        <div class="form_container">
+            <h1>Cadastre-se</h1>
+            <p>Ao clicar em cadastrar você concorda com nossos termos de serviço e com a nossa política de
+                privacidade</p>
+            <?php if (isset($erro)): ?>
+                <div><?= htmlspecialchars($erro) ?></div>
+            <?php endif; ?>
+
+            <form action="/cadastro" method="post">
+                <div>
+                    <input type="text" name="nome" placeholder="Nome do usuário" required class="form_input">
+                </div>
+                <div>
+                    <input type="email" name="email" placeholder="Email" required class="form_input">
+                </div>
+                <div>
+                    <input type="password" name="senha" placeholder="Senha" required class="form_input">
+                </div>
+                <button type="submit" class="form-button">Cadastrar</button>
+            </form>
+            <p>
+                Já tem uma conta? <a href="/login" class="form-link">Entre aqui</a>
+            </p>
+        </div>
+    </main>
+    </body>
 
 <?php require_once '../layouts/footer.php'; ?>

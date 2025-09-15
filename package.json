@@ -1,0 +1,25 @@
+{
+  "name": "tcc-crud-neo4j",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch:css": "sass --watch src/scss:public/css"
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gab-off/BugTalk.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Gab-off/BugTalk/issues"
+  },
+  "homepage": "https://github.com/Gab-off/BugTalk#readme",
+  "description": "",
+  "devDependencies": {
+    "sass": "^1.92.1"
+  }
+}

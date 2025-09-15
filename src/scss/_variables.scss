@@ -1,0 +1,36 @@
+$gradient-cadastro_bg: linear-gradient(180deg, #008AA2, #12454D);
+$form-input_bg: rgba(1, 150, 176, 0.1);
+$form-input_bg_alternate: #60E5FD;
+$form-input_fontColor: #97EFFF;
+$form-input_fontColor_alternate: #004B58;
+$form-button_bg: linear-gradient(180deg, #22B0C9, #0991A9);
+
+@mixin form-input {
+  background: $form-input_bg;
+  box-shadow: 5px 4px 4px 0 rgba(0, 0, 0, 0.25);
+  color: $form-input_fontColor;
+}
+
+@mixin form-input_focus {
+  background: $form-input_bg_alternate;
+  color: $form-input_fontColor_alternate;
+  box-shadow: 1px 1px 1px 0 rgba(0, 0, 0, 0.25);
+}
+
+@mixin form-button {
+  background: $form-button_bg;
+  color: white;
+  font-weight: bold;
+  font-size: medium;
+  text-transform: uppercase;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.25);
+  margin-top: 1rem;
+}
+
+@mixin form-button_hover {
+  background: $form-button_bg;
+  transform: scale(1.05);
+}

@@ -16,4 +16,5 @@ return array(
     'Http\\Discovery\\' => array($vendorDir . '/php-http/discovery/src'),
     'Clue\\StreamFilter\\' => array($vendorDir . '/clue/stream-filter/src'),
     'Bolt\\' => array($vendorDir . '/stefanak-michal/bolt/src'),
+    'App\\' => array($baseDir . '/src'),
 );

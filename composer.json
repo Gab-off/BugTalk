@@ -2,6 +2,11 @@
     "require": {
         "laudis/neo4j-php-client": "^3.4"
     },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
     "config": {
         "allow-plugins": {
             "php-http/discovery": true

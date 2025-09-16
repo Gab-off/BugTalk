@@ -15,10 +15,18 @@ $requestMethod = $_SERVER['REQUEST_METHOD'];
 switch ($uri) {
 
     case '/':
-        if ($requestMethod == 'GET') {
-            require_once __DIR__ . '/../src/Views/semLogin.php';
-        } elseif ($requestMethod == 'POST') {
+//        if ($requestMethod == 'GET') {
+//            require_once __DIR__ . '/../src/Views/semLogin.php';
+//        }
+//        if ($requestMethod == 'POST') {
+//           if (isset($_SESSION['usuario_id'])) {
+//               require_once __DIR__ . '/../src/Views/comLogin.php';
+//           }
+//        }
+        if (isset($_SESSION['usuario_id'])) {
             require_once __DIR__ . '/../src/Views/comLogin.php';
+        } else {
+            require_once __DIR__ . '/../src/Views/semLogin.php';
         }
         break;
 
@@ -41,8 +49,6 @@ switch ($uri) {
     case '/logout':
         $authController->logout();
         break;
-
-
 
     default:
         http_response_code(404);

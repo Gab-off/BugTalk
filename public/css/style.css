@@ -9,6 +9,7 @@
 
 body {
   height: 100vh;
+  font-family: "VCR OSD Mono", sans-serif;
 }
 
 .container {
@@ -37,8 +38,13 @@ body {
   text-align: center;
 }
 
+.form_title {
+  text-transform: uppercase;
+}
+
 .form_input {
   background: rgba(1, 150, 176, 0.1);
+  font-family: "ProFont IIx Nerd Font Mono", monospace;
   box-shadow: 5px 4px 4px 0 rgba(0, 0, 0, 0.25);
   color: #97EFFF;
   width: 100%;
@@ -76,6 +82,8 @@ body {
   border: none;
   border-radius: 0.5rem;
   box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.25);
+  margin-top: 1rem;
+  margin-bottom: 1rem;
   margin-top: 1rem;
   transition: all 0.3s ease;
 }

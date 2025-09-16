@@ -1,8 +1,8 @@
-<?php require_once __DIR__ . '/../layouts/header.php'; ?>
+<?php require_once __DIR__ . '/../layouts/head.php'; ?>
     <body class="cadastrar_bg">
     <main class="container main_form">
         <div class="form_container">
-            <h1>Cadastre-se</h1>
+            <h1 class="form_title">Cadastre-se</h1>
             <p>Ao clicar em cadastrar você concorda com nossos termos de serviço e com a nossa política de
                 privacidade</p>
             <?php if (isset($erro)): ?>

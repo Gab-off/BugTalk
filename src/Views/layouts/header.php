@@ -1,7 +1,5 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Bugtalk Fórum</title>
-    <link rel="stylesheet" href="/css/style.css">
-</head>
+<nav>
+    <?php if (isset($_SESSION['usuario_id'])) : ?>
+        <a href="/logout">Deslogar</a>
+    <?php endif; ?>
+</nav>

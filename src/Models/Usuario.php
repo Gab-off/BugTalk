@@ -48,7 +48,7 @@ class Usuario
      */
     public function findByEmail(string $email)
     {
-        $query = 'MATCH (n:Usuario) WHERE n.email = $email RETURN n LIMIT 1';
+        $query = 'MATCH (n:Usuario) WHERE n.email = $email RETURN n.senha AS senha, id(n) AS id, n.nome AS nome, n.admin AS isAdmin LIMIT 1';;
         $result = $this->client->run($query, ['email' => $email]);
 
         if ($result->isEmpty()) {

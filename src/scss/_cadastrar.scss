@@ -20,16 +20,12 @@
   text-align: center;
 }
 
+.form_title {
+  text-transform: uppercase;
+}
+
 .form_input {
   @include variables.form-input;
-  width: 100%;
-  max-width: 450px;
-  padding: 1rem;
-  margin: 0.5rem 0;
-  font-size: medium;
-  border: none;
-  border-radius: 0.5rem;
-  outline: none;
   transition: all 0.3s ease-in-out;
 }
 
@@ -47,6 +43,7 @@
 
 .form-button {
   @include variables.form-button;
+  margin-top: 1rem;
   transition: all 0.3s ease;
 }
 

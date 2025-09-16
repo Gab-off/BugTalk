@@ -1,9 +1,8 @@
-<?php require_once __DIR__ . '/../layouts/header.php'; ?>
-
+<?php require_once __DIR__ . '/../layouts/head.php'; ?>
 <body class="cadastrar_bg">
 <main class="container main_form">
     <div class="form_container">
-        <h1>Login</h1>
+        <h1 class="form_title">Login</h1>
         <?php if (isset($erro)): ?>
             <div><?= htmlspecialchars($erro) ?></div>
         <?php endif; ?>

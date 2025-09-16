@@ -3,6 +3,7 @@ $form-input_bg: rgba(1, 150, 176, 0.1);
 $form-input_bg_alternate: #60E5FD;
 $form-input_fontColor: #97EFFF;
 $form-input_fontColor_alternate: #004B58;
+$form-visited_links: #052B42;
 $form-button_bg: linear-gradient(180deg, #22B0C9, #0991A9);
 
 @mixin form-input {
@@ -11,7 +12,8 @@ $form-button_bg: linear-gradient(180deg, #22B0C9, #0991A9);
   box-shadow: 5px 4px 4px 0 rgba(0, 0, 0, 0.25);
   color: $form-input_fontColor;
   width: 100%;
-  max-width: 450px;
+  text-align: center;
+  max-width: 700px;
   padding: 1rem;
   margin: 0.5rem 0;
   font-size: medium;
@@ -27,6 +29,7 @@ $form-button_bg: linear-gradient(180deg, #22B0C9, #0991A9);
 }
 
 @mixin form-button {
+  font-family: "ProFont IIx Nerd Font Mono", monospace;
   background: $form-button_bg;
   color: white;
   font-weight: bold;

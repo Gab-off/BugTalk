@@ -4,13 +4,20 @@
   background: variables.$gradient-cadastro_bg;
 }
 
+.logo_bug {
+  width: 100%;
+  max-width: 350px;
+  max-height: 100%;
+}
+
 .main_form {
   color: white;
-  height: 100%;
+}
+
+.all_container {
   display: flex;
-  flex-direction: column;
+  justify-content: space-around;
   align-items: center;
-  justify-content: center;
 }
 
 .form_container {
@@ -22,6 +29,7 @@
 
 .form_title {
   text-transform: uppercase;
+  margin-bottom: 1rem;
 }
 
 .form_input {
@@ -49,5 +57,32 @@
 
 .form-button:hover {
   @include variables.form-button_hover
+}
+
+// Cadastro especifics styles
+.terms_text {
+  margin-bottom: 1rem;
+}
+
+.terms_text > span {
+  color: variables.$form-input_fontColor_alternate;
+}
+
+.terms_text > span:hover {
+  color: variables.$form-input_fontColor;
+  cursor: pointer;
+}
+
+.form-link {
+  color: variables.$form-input_fontColor;
+  text-decoration: none;
+}
+
+.form-link:hover {
+  text-decoration: underline;
+}
+
+.form-link:visited {
+  color: variables.$form-visited_links;
 }
 

@@ -5,9 +5,13 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use App\Controllers\AuthController;
 use App\Controllers\UsuarioController;
+use App\Controllers\HomeController;
+use App\Controllers\PostController;
 
 $authController = new AuthController();
 $usuarioController = new UsuarioController;
+$postController = new PostController;
+$homeController = new HomeController;
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $requestMethod = $_SERVER['REQUEST_METHOD'];
@@ -23,11 +27,7 @@ switch ($uri) {
 //               require_once __DIR__ . '/../src/Views/comLogin.php';
 //           }
 //        }
-        if (isset($_SESSION['usuario_id'])) {
-            require_once __DIR__ . '/../src/Views/comLogin.php';
-        } else {
-            require_once __DIR__ . '/../src/Views/semLogin.php';
-        }
+        $homeController->index();
         break;
 
     case '/cadastro':

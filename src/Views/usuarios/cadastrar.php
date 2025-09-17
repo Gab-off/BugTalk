@@ -6,7 +6,8 @@
             <img src="/assets/imgs/logo_bug.svg" alt="" class="logo_bug">
             <div class="form_container">
                 <h1 class="form_title">Cadastre-se</h1>
-                <p class="terms_text">Ao clicar em cadastrar você concorda com nossos <span>termos de serviço</span> e com a nossa <span>política de
+                <p class="terms_text">Ao clicar em cadastrar você concorda com nossos <span>termos de serviço</span> e
+                    com a nossa <span>política de
                         privacidade</span></p>
                 <?php if (isset($erro)): ?>
                     <div><?= htmlspecialchars($erro) ?></div>
@@ -28,7 +29,7 @@
                     </p>
                 </form>
             </div>
-                <img src="/assets/imgs/logo_bug_inverted.svg" alt="" class="logo_bug">
+            <img src="/assets/imgs/logo_bug_inverted.svg" alt="" class="logo_bug">
 
         </div>
     </main>

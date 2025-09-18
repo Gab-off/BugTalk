@@ -2,5 +2,15 @@
 @use 'reset';
 @use 'general';
 
+// Estilo para o header
+@use 'header';
+
 // Estilo da página cadastrar
 @use 'form-screen';
+
+// Estilo para a home
+@use 'home';
+
+// Estilo para o form de criar post
+@use 'criar-post';
+

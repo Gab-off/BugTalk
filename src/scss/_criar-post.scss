@@ -1,0 +1,5 @@
+@use 'variables';
+
+.criar_bg {
+  background: variables.$gradient-home_bg_dark;
+}

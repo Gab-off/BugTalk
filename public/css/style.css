@@ -1,6 +1,56 @@
+/* 1. Use a more-intuitive box-sizing model */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* 2. Remove default margin */
 * {
   margin: 0;
-  padding: 0;
+}
+
+/* 3. Enable keyword animations */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    interpolate-size: allow-keywords;
+  }
+}
+body {
+  /* 4. Add accessible line-height */
+  line-height: 1.5;
+  /* 5. Improve text rendering */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 6. Improve media defaults */
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* 7. Inherit fonts for form controls */
+input, button, textarea, select {
+  font: inherit;
+}
+
+/* 8. Avoid text overflows */
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+/* 9. Improve line wrapping */
+p {
+  text-wrap: pretty;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+}
+
+/*
+  10. Create a root stacking context
+*/
+#root, #__next {
+  isolation: isolate;
 }
 
 * {
@@ -8,14 +58,82 @@
 }
 
 body {
+  padding-top: 0.5rem;
   min-height: 100vh;
   font-family: "VCR OSD Mono", sans-serif;
+}
+
+.home_bg {
+  background: linear-gradient(180deg, #08262B, #026C7F);
 }
 
 .container {
   max-width: 1440px;
   margin: 0 auto;
   padding: 0 2rem;
+}
+
+nav {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 80px;
+}
+
+.buttons_div {
+  display: flex;
+  gap: 30px;
+}
+
+.header-button {
+  color: white;
+  text-decoration: none;
+  padding: 11px 36px;
+  border-radius: 0.5rem;
+}
+
+.user {
+  background: #2D7C8A;
+}
+
+.login {
+  background: #749FA6;
+}
+
+.logo {
+  width: 100%;
+  max-width: 350px;
+  max-height: 100%;
+}
+
+.form-search {
+  width: 100%;
+  max-width: 450px;
+  min-width: 150px;
+}
+
+.search_wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.search_bar {
+  background: rgba(96, 229, 253, 0.4);
+  font-size: medium;
+  font-family: "ProFont IIx Nerd Font", monospace;
+  color: #97EFFF;
+  width: 100%;
+  padding: 1rem 1rem 1rem 3.5rem;
+  border: none;
+  border-radius: 50px;
+  outline: none;
+}
+
+.search_icon {
+  position: absolute;
+  left: 1rem;
+  pointer-events: none;
 }
 
 .cadastrar_bg {
@@ -127,6 +245,32 @@ body {
 
 .form-link:visited {
   color: #052B42;
+}
+
+.divided_structure {
+  display: grid;
+  grid-template-columns: 250px auto 290px;
+  gap: 80px;
+}
+
+.tags_tab {
+  background: #0C515D;
+  color: white;
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+.tags_title {
+  font-size: medium;
+  text-align: center;
+}
+
+.post_content {
+  background: #0C515D;
+}
+
+.criar_bg {
+  background: linear-gradient(180deg, #08262B, #026C7F);
 }
 
 /*# sourceMappingURL=style.css.map */

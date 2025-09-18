@@ -1,0 +1,26 @@
+@use 'variables';
+
+.divided_structure {
+  display: grid;
+  grid-template-columns: max(250px) auto max(290px);
+  gap: 80px;
+}
+
+// Style tab tags
+.tags_tab {
+  background: variables.$tags-bg;
+  color: white;
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+.tags_title {
+  font-size: medium;
+  text-align: center;
+}
+
+
+// Style posts tab
+.post_content {
+  background: variables.$tags-bg;
+}

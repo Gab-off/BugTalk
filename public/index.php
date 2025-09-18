@@ -19,15 +19,15 @@ $requestMethod = $_SERVER['REQUEST_METHOD'];
 switch ($uri) {
 
     case '/':
-//        if ($requestMethod == 'GET') {
-//            require_once __DIR__ . '/../src/Views/semLogin.php';
-//        }
-//        if ($requestMethod == 'POST') {
-//           if (isset($_SESSION['usuario_id'])) {
-//               require_once __DIR__ . '/../src/Views/comLogin.php';
-//           }
-//        }
         $homeController->index();
+        break;
+
+    case '/post/criar':
+        if ($requestMethod === 'GET') {
+            $postController->showCriarForm();
+        } elseif ($requestMethod === 'POST') {
+            $postController->criar();
+        }
         break;
 
     case '/cadastro':

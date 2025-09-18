@@ -1,11 +1,27 @@
+//Backgrounds
 $gradient-cadastro_bg: linear-gradient(180deg, #008AA2, #12454D);
+$gradient-home_bg_dark: linear-gradient(180deg, #08262B, #026C7F);
 $form-input_bg: rgba(1, 150, 176, 0.1);
 $form-input_bg_alternate: #60E5FD;
+$tags-bg: #0C515D;
+
+
+// Campos de entrada dos forms
 $form-input_fontColor: #97EFFF;
 $form-input_fontColor_alternate: #004B58;
-$form-visited_links: #052B42;
-$form-button_bg: linear-gradient(180deg, #22B0C9, #0991A9);
 
+// Variáveis para links
+$form-visited_links: #052B42;
+
+// Bg para botões
+$form-button_bg: linear-gradient(180deg, #22B0C9, #0991A9);
+$header-buttonUser_bg: #2D7C8A;
+$header-buttonLogin_bg: #749FA6;
+
+// Search-bar bg
+$searchBar_bg_dark: rgba(96, 229, 253, 0.4);
+
+// Mixin para os inputs dos forms de cadastro e login
 @mixin form-input {
   background: $form-input_bg;
   font-family: "ProFont IIx Nerd Font Mono", monospace;

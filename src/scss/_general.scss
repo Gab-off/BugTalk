@@ -1,10 +1,16 @@
+@use 'variables';
 * {
     box-sizing: border-box;
 }
 
 body {
+    padding-top: 0.5rem;
     min-height: 100vh;
     font-family: 'VCR OSD Mono', sans-serif;
+}
+
+.home_bg {
+    background: variables.$gradient-home_bg_dark;
 }
 
 .container {

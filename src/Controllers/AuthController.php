@@ -5,7 +5,7 @@ use App\Models\Usuario;
 
 class AuthController {
     public function showLoginForm() {
-        if (isset($_SESSION['usuario_id'])) {
+        if (isset($_SESSION['id_usuario'])) {
             header('Location: /');
             exit();
         }
@@ -20,7 +20,7 @@ class AuthController {
         $record = $usuarioModel->findByEmail($email);
 
         if ($record && password_verify($senha, $record->get('senha'))) {
-            $_SESSION['usuario_id'] = $record->get('id');
+            $_SESSION['id_usuario'] = $record->get('id');
             $_SESSION['usuario_nome'] = $record->get('nome');
             $_SESSION['usuario_isAdmin'] = $record->get('isAdmin') ?? false;
 

@@ -57,8 +57,7 @@ class Post
                 titulo: $titulo,
                 conteudo: $conteudo,
                 data_criacao: datetime(),
-                score: 0,
-                likes: 0
+                upvotes: 0
             })
         ';
             $this->client->run($query, [

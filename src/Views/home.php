@@ -9,26 +9,43 @@
             </div>
         </article>
         <main>
-            <div>
-                <?php if (empty($posts)): ?>
-                    <p>Nenhum post encontrado</p>
-                <?php else: ?>
-                    <?php foreach ($posts as $post): ?>
-                        <div class="post_content">
-                        <!--    Link e título do post-->
-                        <a href="/post/ver?id=<?= $post['id'] ?>">
-                            <h1><?= htmlspecialchars($post['titulo']) ?></h1>
-                        </a>
+            <?php if (empty($posts)): ?>
+                <p>Nenhum post encontrado</p>
+            <?php else: ?>
+                <div class="posts_buttons">
+                    <a href="">recentes</a>
+                    <a href="">Em alta</a>
+                    <a href="">Pedido de ajuda</a>
+                </div>
+                <?php foreach ($posts as $post): ?>
+                    <div class="post_content">
+                        <div>
+                            <img src="/assets/imgs/icons/icon_user.svg" alt="">
+                        </div>
+                        <div>
+                            <div>
+                                <p class="post_user">Nome usuário</p>
+                                <!--    Link e título do post-->
+                                <a href="/post/ver?id=<?= $post['id'] ?>">
+                                    <h1 class="post_title"><?= htmlspecialchars($post['titulo']) ?></h1>
+                                </a>
+                            </div>
+                            <div>
+                                <a href=""></a>
+                            </div>
+                        </div>
 
                         <!--    Mostragem do conteúdo do post -->
-                        <p>
-                            <?= htmlspecialchars($post['conteudo']) ?>
-                        </p>
-
+                        <a class="upvote" href=""><img src="/assets/imgs/icons/upvote_icon.svg" alt=""></a>
+                        <div class="post_container">
+                            <div class="post_text">
+                                <?= htmlspecialchars($post['conteudo']) ?>
+                            </div>
                         </div>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-            </div>
+
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
         </main>
 
         <aside>

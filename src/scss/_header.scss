@@ -1,5 +1,9 @@
 @use 'variables';
 
+header {
+  flex-shrink: 0;
+}
+
 nav {
   display: grid;
   grid-template-columns: 1fr auto 1fr;

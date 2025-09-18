@@ -1,17 +1,47 @@
 @use 'variables';
 
+@mixin posts_buttons {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  font-size: smaller;
+  text-transform: uppercase;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.home_bg {
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
 .divided_structure {
+  flex-grow: 1;
+  overflow: hidden;
   display: grid;
-  grid-template-columns: max(250px) auto max(290px);
+  grid-template-columns: minmax(150px, 1fr) 3fr minmax(190px, 1fr);
   gap: 80px;
+  margin-top: 2rem;
 }
 
 // Style tab tags
 .tags_tab {
-  background: variables.$tags-bg;
+  background: variables.$tags-bg_dark;
   color: white;
   padding: 1rem;
   border-radius: 5px;
+  box-shadow: 1px 1px 1px 0 rgba(96, 229, 253, 0.5);
+  max-width: 300px;
+  align-self: start;
 }
 
 .tags_title {
@@ -19,8 +49,90 @@
   text-align: center;
 }
 
-
 // Style posts tab
+main {
+  display: grid;
+  gap: 0.5rem;
+  overflow-y: scroll;
+  align-content: start;
+  position: relative;
+
+
+}
+
+main {
+  .posts_buttons {
+    display: flex;
+    justify-content: center;
+    border-radius: 5px;
+    position: sticky;
+    background-color: rgba(15, 74, 91, 0.1); // Um tom escuro do seu gradiente, com 70% de opacidade
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px); // Para compatibilidade com Safari mais antigo
+
+    z-index: 10;
+    top: 0;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.posts_buttons {
+  a {
+    background: variables.$form-button_bg;
+    @include posts_buttons;
+  }
+}
+
+.posts_buttons {
+  a:hover {
+    background: #0e606d;
+    transform: scale(1.05);
+  }
+}
+
+main {
+  .post_content {
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    gap: 1rem;
+    background: variables.$posts-bg_dark;
+    border: 1px solid #1AD7F9;
+    border-radius: 3px;
+    padding: 0.75rem;
+  }
+}
+
 .post_content {
-  background: variables.$tags-bg;
+  a {
+    text-decoration: none;
+    color: white;
+  }
+
+  .post_user {
+    color: white;
+  }
+
+  .post_title {
+    font-size: 23px;
+    text-decoration: none;
+  }
+
+  .upvote {
+    justify-self: center;
+    align-self: center;
+  }
+
+  .post_text {
+    background: variables.$post-content-bg_dark;
+    font-size: medium;
+    overflow: hidden;
+    max-height: 115px;
+    padding: 0.75rem;
+    color: white;
+  }
+}
+
+aside {
+  align-self: start;
 }

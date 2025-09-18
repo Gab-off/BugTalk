@@ -42,12 +42,27 @@ html, body {
   box-shadow: 1px 1px 1px 0 rgba(96, 229, 253, 0.5);
   max-width: 300px;
   align-self: start;
+
+  .tags_title {
+    font-size: medium;
+    text-align: center;
+  }
+
+  a {
+    color: white;
+    text-decoration: none;
+
+    &:hover {
+      color: #97EFFF;
+      text-decoration: underline;
+    }
+
+
+  }
+
+
 }
 
-.tags_title {
-  font-size: medium;
-  text-align: center;
-}
 
 // Style posts tab
 main {
@@ -118,11 +133,6 @@ main {
     text-decoration: none;
   }
 
-  .upvote {
-    justify-self: center;
-    align-self: center;
-  }
-
   .post_text {
     background: variables.$post-content-bg_dark;
     font-size: medium;
@@ -130,6 +140,55 @@ main {
     max-height: 115px;
     padding: 0.75rem;
     color: white;
+  }
+}
+
+// Upvote form and button
+.post_actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .upvote-button {
+    background: none;
+    color: #22B9D3;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: #5FE5FD;
+      transform: scale(1.1);
+    }
+
+    &.active {
+      animation: color-change 1.5s infinite; /* Applies the 'color-change' animation */
+    }
+
+    @keyframes color-change {
+      0% {
+        color: red; /* Starting color */
+      }
+
+      50% {
+        color: lime; /* Starting color */
+
+      }
+
+      100% {
+        color: red; /* Starting color */
+      }
+    }
+
+    &.active:hover {
+      color: lightcoral;
+    }
+  }
+
+  .vote-count {
+    color: white;
+    font-size: medium;
   }
 }
 

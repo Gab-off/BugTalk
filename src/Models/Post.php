@@ -24,31 +24,95 @@ class Post
      * Busca todos os posts e seus autores para exibir no feed.
      * @return array - Uma lista de posts.
      */
-    public function findAll(): array
+    public function findAll(?int $id_usuario_logado = null): array
     {
         $posts = [];
         try {
+            // A query agora é mais poderosa.
             $query = '
-                MATCH (u:Usuario)-[:POSTED]->(p:POST)
-                RETURN p.titulo AS titulo, p.conteudo AS conteudo, u.nome AS autor, id(p) AS id
-                ORDER BY p.data_criacao DESC
-            ';
-            $result = $this->client->run($query);
+            // Primeiro, encontramos o usuário logado (se um ID for fornecido)
+            OPTIONAL MATCH (currentUser:Usuario) WHERE id(currentUser) = $id_usuario_logado
+            
+            // Depois, encontramos o padrão de posts e autores
+            MATCH (author:Usuario)-[:POSTED]->(p:POST)
+            
+            // Contamos quantos votos cada post tem no total
+            OPTIONAL MATCH (voter:Usuario)-[:VOTED_UP]->(p)
+            
+            // Agrupamos os resultados por post e autor, calculamos o total de votos
+            // e passamos o currentUser para a próxima fase
+            WITH p, author, count(voter) AS upvotes, currentUser
+            
+            // Ordenamos pelo mais recente
+            ORDER BY p.data_criacao DESC
+            
+            // Finalmente, retornamos tudo o que precisamos
+            RETURN 
+                p.titulo AS titulo, 
+                p.conteudo AS conteudo, 
+                author.nome AS autor, 
+                id(p) AS id,
+                upvotes,
+                // A MÁGICA: Verificamos se existe um relacionamento [:VOTED_UP]
+                // entre o usuário logado e o post atual. Retorna true ou false.
+                CASE WHEN currentUser IS NOT NULL THEN EXISTS((currentUser)-[:VOTED_UP]->(p)) ELSE false END AS userHasVoted
+        ';
+
+            $result = $this->client->run($query, ['id_usuario_logado' => $id_usuario_logado]);
+
             foreach ($result as $record) {
                 $posts[] = $record->toArray();
             }
         } catch (\Exception $e) {
-
+            // die("ERRO AO BUSCAR POSTS no findAll(): " . $e->getMessage()); // Descomente para depurar
         }
         return $posts;
     }
 
     /**
+     * Adiciona ou remove um upvote de um usuário em um post.
+     * @param int $id_post - O ID do post a ser votado.
+     * @param int $id_usuario - O ID do usuário que está votando.
+     * @return bool - Retorna true se a operação foi bem-sucedida.
+     */
+    public function toggleVote(int $id_post, int $id_usuario): bool
+    {
+        try {
+            $queryCheck = '
+                MATCH (u:Usuario)-[r:VOTED_UP]->(p:POST)
+                WHERE id(u) = $id_usuario AND id(p) = $id_post
+                RETURN r
+            ';
+            $result = $this->client->run($queryCheck, ['id_usuario' => $id_usuario, 'id_post' => $id_post]);
+
+            if ($result->isEmpty()) {
+                $queryCreate = '
+                    MATCH (u:Usuario) WHERE id(u) = $id_usuario
+                    MATCH (p:POST) WHERE id(p) = $id_post
+                    CREATE (u)-[:VOTED_UP]->(p)
+                ';
+                $this->client->run($queryCreate, ['id_usuario' => $id_usuario, 'id_post' => $id_post]);
+            } else {
+                $queryDelete = '
+                    MATCH (u:Usuario)-[r:VOTED_UP]->(p:POST)
+                    WHERE id(u) = $id_usuario AND id(p) = $id_post
+                    DELETE r
+                ';
+                $this->client->run($queryDelete, ['id_usuario' => $id_usuario, 'id_post' => $id_post]);
+            }
+            return true;
+        } catch (\Exception $e) {
+            die("ERRO DENTRO DO toggleVote(): " . $e->getMessage());
+        }
+    }
+
+
+    /**
      * Cria um novo post no banco de dados, já conectado ao seu autor.
      * @param array $dados - Deve conter 'titulo', 'conteudo' e 'id_usuario'.
-     * @return bool - Retorna true em caso de sucesso, false se falhar.
+     * @return int|null - Retorna o ID do post em caso de sucesso, ou null se falhar.
      */
-    public function create(array $dados): bool
+    public function create(array $dados): ?int
     {
         try {
             $query = '
@@ -59,12 +123,35 @@ class Post
                 data_criacao: datetime(),
                 upvotes: 0
             })
+            RETURN id(p) AS id_post
         ';
-            $this->client->run($query, [
+            $result = $this->client->run($query, [
                 'id_usuario' => $dados['id_usuario'],
-                'titulo' => $dados['titulo'],
-                'conteudo' => $dados['conteudo']
+                'titulo' => htmlspecialchars($dados['titulo']),
+                'conteudo' => htmlspecialchars($dados['conteudo'])
             ]);
+
+            return $result->first()->get('id_post');
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    /**
+     * NOVO MÉTODO: Cria o relacionamento [:HAS_TAG] entre um post e uma tag.
+     * @param int $id_post - O ID do post que receberá a tag.
+     * @param int $id_tag - O ID da tag a ser associada.
+     * @return bool - Retorna true em caso de sucesso.
+     */
+    public function associarTag(int $id_post, int $id_tag): bool
+    {
+        try {
+            $query = '
+                MATCH (p:POST) WHERE id(p) = $id_post
+                MATCH (t:Tag) WHERE id(t) = $id_tag
+                MERGE (p)-[:HAS_TAG]->(t)
+            ';
+            $this->client->run($query, ['id_post' => $id_post, 'id_tag' => $id_tag]);
             return true;
         } catch (\Exception $e) {
             return false;

@@ -281,10 +281,17 @@ html, body {
   max-width: 300px;
   align-self: start;
 }
-
-.tags_title {
+.tags_tab .tags_title {
   font-size: medium;
   text-align: center;
+}
+.tags_tab a {
+  color: white;
+  text-decoration: none;
+}
+.tags_tab a:hover {
+  color: #97EFFF;
+  text-decoration: underline;
 }
 
 main {
@@ -348,10 +355,6 @@ main .post_content {
   font-size: 23px;
   text-decoration: none;
 }
-.post_content .upvote {
-  justify-self: center;
-  align-self: center;
-}
 .post_content .post_text {
   background: #092A2F;
   font-size: medium;
@@ -359,6 +362,45 @@ main .post_content {
   max-height: 115px;
   padding: 0.75rem;
   color: white;
+}
+
+.post_actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.post_actions .upvote-button {
+  background: none;
+  color: #22B9D3;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.post_actions .upvote-button:hover {
+  color: #5FE5FD;
+  transform: scale(1.1);
+}
+.post_actions .upvote-button.active {
+  animation: color-change 1.5s infinite; /* Applies the 'color-change' animation */
+}
+@keyframes color-change {
+  0% {
+    color: red; /* Starting color */
+  }
+  50% {
+    color: lime; /* Starting color */
+  }
+  100% {
+    color: red; /* Starting color */
+  }
+}
+.post_actions .upvote-button.active:hover {
+  color: lightcoral;
+}
+.post_actions .vote-count {
+  color: white;
+  font-size: medium;
 }
 
 aside {

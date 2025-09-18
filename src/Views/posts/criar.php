@@ -16,6 +16,10 @@
             <label for="conteudo">Conteúdo:</label>
             <textarea name="conteudo" id="conteudo" cols="30" rows="10" required></textarea>
         </div>
+        <div class="form-group">
+            <label for="tags">Tags (separadas por vírgula):</label>
+            <input type="text" name="tags" id="tags" placeholder="Ex: php, javascript, neo4j" class="form-input">
+        </div>
         <button type="submit">Criar</button>
         <a href="/">Cancelar</a>
     </form>

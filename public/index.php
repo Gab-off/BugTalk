@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -27,6 +28,12 @@ switch ($uri) {
             $postController->showCriarForm();
         } elseif ($requestMethod === 'POST') {
             $postController->criar();
+        }
+        break;
+
+    case '/post/vote':
+        if ($requestMethod === 'POST') {
+            $postController->vote();
         }
         break;
 

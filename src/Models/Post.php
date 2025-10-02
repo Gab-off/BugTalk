@@ -204,4 +204,32 @@ class Post
         }
     }
 
+    // Dentro da classe App\Models\Post
+
+    /**
+     * Busca todos os posts criados por um ID de usuário específico.
+     * @param int $id_usuario
+     * @return array
+     */
+    public function findByUsuarioId(int $id_usuario): array
+    {
+        $posts = [];
+        try {
+            $query = '
+            MATCH (u:Usuario)-[:POSTED]->(p:POST)
+            WHERE id(u) = $id_usuario
+            RETURN p.titulo AS titulo, p.conteudo AS conteudo, p.data_criacao AS data, id(p) AS id
+            ORDER BY p.data_criacao DESC
+        ';
+            $result = $this->client->run($query, ['id_usuario' => $id_usuario]);
+
+            foreach ($result as $record) {
+                $posts[] = $record->toArray();
+            }
+        } catch (\Exception $e) {
+            error_log("Erro ao buscar posts por usuário: " . $e->getMessage());
+        }
+        return $posts;
+    }
+
 }

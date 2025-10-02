@@ -58,4 +58,63 @@ class Usuario
         return $result->first();
     }
 
+    // Dentro da classe App\Models\Usuario
+
+    /**
+     * Encontra um usuário pelo seu ID interno do Neo4j.
+     * @param int $id_usuario O ID do usuário a ser procurado.
+     * @return array|null Retorna os dados do usuário como um array associativo ou null se não encontrar.
+     */
+    public function findById(int $id_usuario): ?array
+    {
+        try {
+            $query = '
+            MATCH (u:Usuario) 
+            WHERE id(u) = $id_usuario 
+            RETURN u.nome AS nome, u.email AS email, id(u) AS id
+            LIMIT 1
+        ';
+            $result = $this->client->run($query, ['id_usuario' => $id_usuario]);
+
+            if ($result->isEmpty()) {
+                return null; // Usuário não encontrado
+            }
+
+            return $result->first()->toArray(); // Retorna o usuário como um array associativo
+
+        } catch (\Exception $e) {
+            error_log("Erro ao buscar usuário por ID: " . $e->getMessage());
+            return null;
+        }
+    }
+
+    // Dentro da classe App\Models\Usuario
+
+    /**
+     * Busca todos os usuários e a contagem de posts de cada um para a área de admin.
+     * @return array
+     */
+    public function findAllWithPostCount(): array
+    {
+        $usuarios = [];
+        try {
+            // Esta query usa OPTIONAL MATCH, que busca por posts, mas não falha se um usuário não tiver nenhum.
+            $query = '
+            MATCH (u:Usuario)
+            OPTIONAL MATCH (u)-[:POSTED]->(p:POST)
+            RETURN u.nome AS nome, u.email AS email, id(u) AS id, count(p) AS postCount
+            ORDER BY u.nome ASC
+        ';
+            $result = $this->client->run($query);
+
+            foreach ($result as $record) {
+                $usuarios[] = $record->toArray();
+            }
+        } catch (\Exception $e) {
+            // Em um app real, é bom registrar o erro em um arquivo de log
+            error_log("Erro ao buscar usuários com contagem de posts: " . $e->getMessage());
+        }
+        return $usuarios;
+    }
+
 }

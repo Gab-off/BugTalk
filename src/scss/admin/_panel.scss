@@ -1,0 +1,94 @@
+// src/scss/pages/_admin.scss
+
+// Importa suas variáveis para que possamos usá-las aqui
+@use '../variables';
+
+// Estilos para o fundo da página, mantendo a consistência com a home
+.admin-page-bg {
+  background: variables.$gradient-home_bg_dark;
+  min-height: 100vh; // Garante que o gradiente cubra a tela toda
+}
+
+.admin-container {
+  padding-top: 2rem;
+  padding-bottom: 4rem;
+}
+
+.admin-title {
+  font-size: 2.25rem; // 36px
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: variables.$form-input_fontColor; // Cor ciano clara para destaque
+  border-bottom: 1px solid variables.$tags-bg_dark; // Borda com a cor das tags
+  padding-bottom: 1rem;
+}
+
+// Card principal que envolve a tabela ou os posts
+.admin-card, .card-vazio {
+  background-color: variables.$posts-bg_dark; // Cor de fundo dos posts
+  padding: 2rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th, td {
+    padding: 1rem 1.5rem;
+    text-align: left;
+    border-bottom: 1px solid variables.$tags-bg_dark; // Linhas da tabela
+  }
+
+  th {
+    font-size: 0.875rem; // 14px
+    font-weight: 600;
+    color: lighten(variables.$form-input_fontColor, 10%); // Um pouco mais claro que o texto normal
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  td {
+    color: variables.$form-input_fontColor;
+  }
+}
+
+.link-acao {
+  color: variables.$form-input_bg_alternate; // Cor de destaque alternativa (ciano mais forte)
+  font-weight: bold;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.link-voltar {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  font-weight: bold;
+  color: variables.$form-input_bg_alternate;
+}
+
+// Container para os cards de post
+.posts-container-admin {
+  display: grid;
+  gap: 1.5rem;
+}
+
+// Card individual de post na página de admin
+.post-card-admin {
+  background-color: variables.$post-content-bg_dark; // Fundo de conteúdo de post
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+
+  h2 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: variables.$form-input_fontColor;
+  }
+  p {
+    color: lighten(variables.$form-input_fontColor, 5%);
+  }
+}

@@ -8,11 +8,15 @@ use App\Controllers\AuthController;
 use App\Controllers\UsuarioController;
 use App\Controllers\HomeController;
 use App\Controllers\PostController;
+use App\Controllers\AdminController;
+
 
 $authController = new AuthController();
 $usuarioController = new UsuarioController;
 $postController = new PostController;
 $homeController = new HomeController;
+$adminController = new AdminController();
+
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $requestMethod = $_SERVER['REQUEST_METHOD'];
@@ -55,6 +59,19 @@ switch ($uri) {
 
     case '/logout':
         $authController->logout();
+        break;
+
+    case '/admin/usuarios':
+        if ($requestMethod === 'GET') {
+            $adminController->showUsuarios();
+        }
+        break;
+
+    // Esta rota espera um ID na URL, como: /admin/usuario/posts?id=123
+    case '/admin/usuario/posts':
+        if ($requestMethod === 'GET') {
+            $adminController->showUsuarioPosts();
+        }
         break;
 
     default:

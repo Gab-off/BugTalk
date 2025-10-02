@@ -25,6 +25,6 @@
         <img src="/assets/imgs/logo_bug_inverted.svg" alt="" class="logo_bug">
     </div>
 </main>
-</body>
 
 <?php require_once __DIR__ . '/../layouts/footer.php'; ?>
+</body>

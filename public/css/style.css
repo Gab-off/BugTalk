@@ -449,4 +449,86 @@ aside div a {
   margin-bottom: 0.5rem;
 }
 
+.admin-page-bg {
+  background: linear-gradient(180deg, #08262B, #026C7F);
+  min-height: 100vh;
+}
+
+.admin-container {
+  padding-top: 2rem;
+  padding-bottom: 4rem;
+}
+
+.admin-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: #97EFFF;
+  border-bottom: 1px solid #0C515D;
+  padding-bottom: 1rem;
+}
+
+.admin-card, .card-vazio {
+  background-color: #1E515A;
+  padding: 2rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.admin-table th, .admin-table td {
+  padding: 1rem 1.5rem;
+  text-align: left;
+  border-bottom: 1px solid #0C515D;
+}
+.admin-table th {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: rgb(202, 246.8461538462, 255);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.admin-table td {
+  color: #97EFFF;
+}
+
+.link-acao {
+  color: #60E5FD;
+  font-weight: bold;
+  text-decoration: none;
+}
+.link-acao:hover {
+  text-decoration: underline;
+}
+
+.link-voltar {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  font-weight: bold;
+  color: #60E5FD;
+}
+
+.posts-container-admin {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.post-card-admin {
+  background-color: #092A2F;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+}
+.post-card-admin h2 {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #97EFFF;
+}
+.post-card-admin p {
+  color: rgb(176.5, 242.9230769231, 255);
+}
+
 /*# sourceMappingURL=style.css.map */

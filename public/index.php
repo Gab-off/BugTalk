@@ -9,6 +9,7 @@ use App\Controllers\UsuarioController;
 use App\Controllers\HomeController;
 use App\Controllers\PostController;
 use App\Controllers\AdminController;
+use App\Controllers\ComentarioController;
 
 
 $authController = new AuthController();
@@ -16,6 +17,7 @@ $usuarioController = new UsuarioController;
 $postController = new PostController;
 $homeController = new HomeController;
 $adminController = new AdminController();
+$comentarioController = new ComentarioController();
 
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -71,6 +73,20 @@ switch ($uri) {
     case '/admin/usuario/posts':
         if ($requestMethod === 'GET') {
             $adminController->showUsuarioPosts();
+        }
+        break;
+
+    // Rota para ver um post específico (ex: /post/ver?id=123)
+    case '/post/ver':
+        if ($requestMethod === 'GET') {
+            $postController->show();
+        }
+        break;
+
+    // Rota para salvar um novo comentário
+    case '/comentario/criar':
+        if ($requestMethod === 'POST') {
+            $comentarioController->criar();
         }
         break;
 

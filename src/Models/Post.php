@@ -74,6 +74,43 @@ class Post
         return $posts;
     }
 
+    // Adicione este método dentro da classe App\Models\Post
+
+    /**
+     * Busca um único post pelo seu ID, juntamente com o nome do autor.
+     * @param int $id_post O ID do post a ser procurado.
+     * @return array|null Retorna os dados do post como um array associativo ou null se não encontrar.
+     */
+    public function findById(int $id_post): ?array
+    {
+        try {
+            // Query que busca o post e seu autor pelo ID do post
+            $query = '
+            MATCH (author:Usuario)-[:POSTED]->(p:POST)
+            WHERE id(p) = $id_post
+            RETURN
+                p.titulo AS titulo,
+                p.conteudo AS conteudo,
+                author.nome AS autor,
+                id(p) AS id
+            LIMIT 1
+        ';
+            $result = $this->client->run($query, ['id_post' => $id_post]);
+
+            // Verifica de forma segura se o post foi encontrado
+            if ($result->isEmpty()) {
+                return null;
+            }
+
+            // Retorna os dados do post como um array associativo
+            return $result->first()->toArray();
+
+        } catch (\Exception $e) {
+            error_log("Erro ao buscar post por ID: " . $e->getMessage());
+            return null;
+        }
+    }
+
     public function getRecentActivity(int $limit = 5)
     {
         $activities = [];

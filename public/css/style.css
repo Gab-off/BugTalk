@@ -547,4 +547,154 @@ aside div a {
   color: rgb(176.5, 242.9230769231, 255);
 }
 
+.post-view-container {
+  padding-top: 2rem;
+  padding-bottom: 4rem;
+  color: #97EFFF;
+}
+
+.post-card-full {
+  background-color: #1E515A;
+  padding: 2rem;
+  border-radius: 0.75rem;
+  margin-bottom: 2.5rem;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+}
+.post-card-full .post-author {
+  font-weight: 700;
+  color: #60E5FD;
+  margin-bottom: 0.5rem;
+}
+.post-card-full .post-title-full {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 1.5rem;
+}
+.post-card-full .post-content-full {
+  font-size: 1.125rem;
+  line-height: 1.75;
+  color: white;
+}
+
+.comentarios-section {
+  background-color: rgb(27.45, 74.115, 82.35);
+  padding: 2rem;
+  border-radius: 0.75rem;
+}
+
+.comentarios-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: white;
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #0C515D;
+}
+
+.comment-form textarea {
+  background: rgba(1, 150, 176, 0.1);
+  font-family: "ProFont IIx Nerd Font Mono", monospace;
+  box-shadow: 5px 4px 4px 0 rgba(0, 0, 0, 0.25);
+  color: #97EFFF;
+  width: 100%;
+  text-align: center;
+  max-width: 700px;
+  padding: 1rem;
+  margin: 0.5rem 0;
+  font-size: medium;
+  border: none;
+  border-radius: 0.5rem;
+  outline: none;
+  text-align: left;
+  margin-bottom: 1rem;
+}
+.comment-form .btn {
+  font-family: "ProFont IIx Nerd Font Mono", monospace;
+  background: linear-gradient(180deg, #22B0C9, #0991A9);
+  color: white;
+  font-weight: bold;
+  font-size: medium;
+  text-transform: uppercase;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.25);
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  width: auto;
+  padding: 0.75rem 1.5rem;
+}
+
+.comentarios-list {
+  margin-top: 2.5rem;
+}
+
+.comentario-card {
+  padding: 1.25rem;
+  background-color: #092A2F;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+.comentario-card .comentario-autor {
+  font-weight: 700;
+  color: #60E5FD;
+  margin-bottom: 0.5rem;
+}
+.comentario-card .comentario-texto {
+  color: white;
+  line-height: 1.6;
+}
+
+.comentarios-aninhados {
+  list-style: none;
+  padding: 0;
+}
+.comentarios-aninhados ul.comentarios-aninhados {
+  margin-top: 1rem;
+  margin-left: 1.5rem;
+  padding-left: 1.5rem;
+  border-left: 2px solid #0C515D;
+}
+
+.comment-form-reply {
+  margin-top: 1rem;
+}
+.comment-form-reply textarea {
+  background: rgba(1, 150, 176, 0.1);
+  font-family: "ProFont IIx Nerd Font Mono", monospace;
+  box-shadow: 5px 4px 4px 0 rgba(0, 0, 0, 0.25);
+  color: #97EFFF;
+  width: 100%;
+  text-align: center;
+  max-width: 700px;
+  padding: 1rem;
+  margin: 0.5rem 0;
+  font-size: medium;
+  border: none;
+  border-radius: 0.5rem;
+  outline: none;
+  text-align: left;
+  font-size: 0.875rem;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.comment-form-reply .btn-reply {
+  font-family: "ProFont IIx Nerd Font Mono", monospace;
+  background: linear-gradient(180deg, #22B0C9, #0991A9);
+  color: white;
+  font-weight: bold;
+  font-size: medium;
+  text-transform: uppercase;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.25);
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.75rem;
+  padding: 0.4rem 1rem;
+  margin-top: 0;
+}
+
 /*# sourceMappingURL=style.css.map */

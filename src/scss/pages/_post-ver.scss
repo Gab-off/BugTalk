@@ -1,0 +1,124 @@
+// src/scss/pages/_post-view.scss
+
+@use '../variables';
+
+// Container principal da página de visualização do post
+.post-view-container {
+  padding-top: 2rem;
+  padding-bottom: 4rem;
+  color: variables.$form-input_fontColor; // Cor de texto padrão clara
+}
+
+// Estilo para o card do post principal
+.post-card-full {
+  background-color: variables.$posts-bg_dark;
+  padding: 2rem;
+  border-radius: 0.75rem;
+  margin-bottom: 2.5rem;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+
+  .post-author {
+    font-weight: 700;
+    color: variables.$form-input_bg_alternate; // Cor de destaque para o autor
+    margin-bottom: 0.5rem;
+  }
+
+  .post-title-full {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 1.5rem;
+  }
+
+  .post-content-full {
+    font-size: 1.125rem;
+    line-height: 1.75;
+    color: lighten(white, 20%);
+  }
+}
+
+// Seção de comentários
+.comentarios-section {
+  background-color: darken(variables.$posts-bg_dark, 2%);
+  padding: 2rem;
+  border-radius: 0.75rem;
+}
+
+.comentarios-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: white;
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid variables.$tags-bg_dark;
+}
+
+// Formulário de Comentário
+.comment-form {
+  textarea {
+    @include variables.form-input; // Reutiliza seu mixin de input!
+    text-align: left; // Sobrescreve o text-align: center do mixin
+    margin-bottom: 1rem;
+  }
+  .btn {
+    @include variables.form-button; // Reutiliza seu mixin de botão!
+    width: auto; // Permite que o botão tenha a largura do texto
+    padding: 0.75rem 1.5rem;
+  }
+}
+
+// Lista de comentários
+.comentarios-list {
+  margin-top: 2.5rem;
+}
+
+.comentario-card {
+  padding: 1.25rem;
+  background-color: variables.$post-content-bg_dark;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+
+
+  .comentario-autor {
+    font-weight: 700;
+    color: variables.$form-input_bg_alternate;
+    margin-bottom: 0.5rem;
+  }
+
+  .comentario-texto {
+    color: lighten(white, 15%);
+    line-height: 1.6;
+  }
+}
+
+// Estilo para o aninhamento (estilo Reddit)
+.comentarios-aninhados {
+  list-style: none;
+  padding: 0;
+
+  // Adiciona a linha vertical e o espaçamento para respostas
+  ul.comentarios-aninhados {
+    margin-top: 1rem;
+    margin-left: 1.5rem;
+    padding-left: 1.5rem;
+    border-left: 2px solid variables.$tags-bg_dark;
+  }
+}
+
+// Formulário de resposta a um comentário (menor)
+.comment-form-reply {
+  margin-top: 1rem;
+  textarea {
+    @include variables.form-input;
+    text-align: left;
+    font-size: 0.875rem;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .btn-reply {
+    @include variables.form-button;
+    font-size: 0.75rem;
+    padding: 0.4rem 1rem;
+    margin-top: 0;
+  }
+}

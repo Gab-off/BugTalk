@@ -81,4 +81,29 @@ class PostController
         header('Location: '. $_SERVER['HTTP_REFERER'] ?? '/' );;
         exit();
     }
+
+    // Dentro da classe App\Controllers\PostController
+
+// Você já tem um método findById no seu Post.php, vamos usá-lo.
+// Se não tiver, crie um método simples que busca um post pelo ID.
+    /**
+     * Exibe um único post e seus comentários.
+     */
+    public function show() {
+        $id_post = (int)($_GET['id'] ?? 0);
+
+        $postModel = new Post();
+        $post = $postModel->findById($id_post); // Supondo que findById exista
+
+        if (!$post) {
+            http_response_code(404);
+            echo "Post não encontrado.";
+            exit();
+        }
+
+        $comentarioModel = new \App\Models\Comentario();
+        $comentarios = $comentarioModel->findComentariosAninhados($id_post);
+
+        require_once __DIR__ . '/../Views/posts/ver.php';
+    }
 }

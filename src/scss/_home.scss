@@ -193,5 +193,33 @@ main {
 }
 
 aside {
-  align-self: start;
+  overflow-y: scroll;
+  position: relative;
+
+  h3 {
+    color: white;
+    font-size: medium;
+    margin-bottom: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: rgba(15, 74, 91, 0.1);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  div {
+    a {
+      border: 1px solid #1AD7F9;
+      background: #0C515D;
+      display: grid;
+      font-size: smaller;
+      color: white;
+      text-decoration: none;
+      gap: 0.25rem;
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+  }
 }

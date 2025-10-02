@@ -16,6 +16,7 @@ class HomeController
 
         $posts = $postModel->findAll($id_usuario_logado);
         $tags = $tagModel->findAll();
+        $atividades = $postModel->getRecentActivity();
 
         require_once __DIR__ . '/../Views/home.php';
     }

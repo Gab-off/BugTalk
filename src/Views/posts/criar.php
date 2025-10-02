@@ -1,7 +1,7 @@
 <?php require_once __DIR__ . '/../layouts/head.php'; ?>
 <?php require_once __DIR__ . '/../layouts/header.php'; ?>
 <body class="container criar_bg">
-<main>
+<main class="criarPost_container">
     <h1>Criar Post</h1>
     <!--        Erro ao se criar um post-->
     <?php if (isset($erro)): ?>

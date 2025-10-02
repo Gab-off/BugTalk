@@ -69,6 +69,52 @@ class Post
         return $posts;
     }
 
+    public function getRecentActivity(int $limit = 5)
+    {
+        $activities = [];
+        try {
+            $query = '
+            MATCH (u:Usuario)-[:POSTED]->(p:POST)
+            RETURN
+                u.nome AS autor,
+                "criou o post:" AS tipo_evento,
+                p.titulo AS titulo_alvo,
+                id(p) AS id_alvo,
+                p.data_criacao AS data_evento
+                
+            UNION
+            
+            MATCH (u:Usuario)-[:COMENTOU]->(c:Comentario)-[:É_RESPOSTA_DE]->(p:POST)
+            RETURN
+                u.nome AS autor,
+                "comentou em:" AS tipo_evento,
+                p.titulo AS titulo_alvo,
+                id(p) AS id_alvo,
+                c.data_criacao AS data_evento
+                
+            UNION
+            
+            MATCH (u:Usuario)-[r:VOTED_UP]->(p:POST)
+            RETURN
+                u.nome AS autor,
+                "deu um upvote em:" AS tipo_evento,
+                p.titulo AS titulo_alvo,
+                id(p) AS id_alvo,
+                r.created_at AS data_evento
+                            
+            ORDER BY data_evento DESC
+            LIMIT $limit
+            ';
+            $result = $this->client->run($query, ['limit' => $limit]);
+            foreach ($result as $record) {
+                $activities[] = $record->toArray();
+            }
+        } catch (\Exception $e) {
+            error_log("Erro ao buscar atividades: " . $e->getMessage());
+        }
+        return $activities;
+    }
+
     /**
      * Adiciona ou remove um upvote de um usuário em um post.
      * @param int $id_post - O ID do post a ser votado.
@@ -87,9 +133,9 @@ class Post
 
             if ($result->isEmpty()) {
                 $queryCreate = '
-                    MATCH (u:Usuario) WHERE id(u) = $id_usuario
-                    MATCH (p:POST) WHERE id(p) = $id_post
-                    CREATE (u)-[:VOTED_UP]->(p)
+                MATCH (u:Usuario) WHERE id(u) = $id_usuario
+                MATCH (p:POST) WHERE id(p) = $id_post
+                CREATE (u)-[r:VOTED_UP {created_at: datetime()}]->(p)
                 ';
                 $this->client->run($queryCreate, ['id_usuario' => $id_usuario, 'id_post' => $id_post]);
             } else {

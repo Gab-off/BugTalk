@@ -75,6 +75,7 @@ body {
 
 header {
   flex-shrink: 0;
+  margin-top: 0.5rem;
 }
 
 nav {
@@ -404,11 +405,48 @@ main .post_content {
 }
 
 aside {
-  align-self: start;
+  overflow-y: scroll;
+  position: relative;
+}
+aside h3 {
+  color: white;
+  font-size: medium;
+  margin-bottom: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: rgba(15, 74, 91, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+aside div a {
+  border: 1px solid #1AD7F9;
+  background: #0C515D;
+  display: grid;
+  font-size: smaller;
+  color: white;
+  text-decoration: none;
+  gap: 0.25rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .criar_bg {
   background: linear-gradient(180deg, #08262B, #026C7F);
+}
+
+.criarPost_container {
+  color: white;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+.criarPost_container div {
+  display: grid;
+  margin-bottom: 0.5rem;
 }
 
 /*# sourceMappingURL=style.css.map */

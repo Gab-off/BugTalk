@@ -24,24 +24,28 @@ class Post
      * Busca todos os posts e seus autores para exibir no feed.
      * @return array - Uma lista de posts.
      */
+// Em src/Models/Post.php
+
     public function findAll(?int $id_usuario_logado = null): array
     {
         $posts = [];
         try {
-            // A query agora é mais poderosa.
+            // Esta é a sua query, agora com a adição da busca por tags
             $query = '
-            // Primeiro, encontramos o usuário logado (se um ID for fornecido)
+            // Encontra o usuário logado, se houver
             OPTIONAL MATCH (currentUser:Usuario) WHERE id(currentUser) = $id_usuario_logado
             
-            // Depois, encontramos o padrão de posts e autores
+            // Encontra o padrão de posts e autores
             MATCH (author:Usuario)-[:POSTED]->(p:POST)
             
-            // Contamos quantos votos cada post tem no total
+            // --- ADIÇÃO: Encontra as tags de cada post ---
+            OPTIONAL MATCH (p)-[:HAS_TAG]->(t:Tag)
+            
+            // Encontra os votos para cada post
             OPTIONAL MATCH (voter:Usuario)-[:VOTED_UP]->(p)
             
-            // Agrupamos os resultados por post e autor, calculamos o total de votos
-            // e passamos o currentUser para a próxima fase
-            WITH p, author, count(voter) AS upvotes, currentUser
+            // Agrupamos os resultados
+            WITH p, author, count(voter) AS upvotes, currentUser, collect(t.nome) AS tags
             
             // Ordenamos pelo mais recente
             ORDER BY p.data_criacao DESC
@@ -53,9 +57,10 @@ class Post
                 author.nome AS autor, 
                 id(p) AS id,
                 upvotes,
-                // A MÁGICA: Verificamos se existe um relacionamento [:VOTED_UP]
-                // entre o usuário logado e o post atual. Retorna true ou false.
-                CASE WHEN currentUser IS NOT NULL THEN EXISTS((currentUser)-[:VOTED_UP]->(p)) ELSE false END AS userHasVoted
+                // A verificação se o usuário já votou
+                CASE WHEN currentUser IS NOT NULL THEN EXISTS((currentUser)-[:VOTED_UP]->(p)) ELSE false END AS userHasVoted,
+                // --- ADIÇÃO: Retornamos a lista de nomes das tags ---
+                tags
         ';
 
             $result = $this->client->run($query, ['id_usuario_logado' => $id_usuario_logado]);
@@ -64,7 +69,7 @@ class Post
                 $posts[] = $record->toArray();
             }
         } catch (\Exception $e) {
-            // die("ERRO AO BUSCAR POSTS no findAll(): " . $e->getMessage()); // Descomente para depurar
+            die("ERRO AO BUSCAR POSTS no findAll(): " . $e->getMessage());
         }
         return $posts;
     }

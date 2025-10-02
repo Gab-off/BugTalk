@@ -43,7 +43,13 @@
                                 </a>
                             </div>
                             <div>
-                                <a href=""></a>
+                                <div class="post-tags">
+                                    <?php if (!empty($post['tags'])): ?>
+                                        <?php foreach ($post['tags'] as $tagName): ?>
+                                            <span class="tag-item"><?= htmlspecialchars($tagName) ?></span>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </div>
                             </div>
                         </div>
 
@@ -72,7 +78,6 @@
                                 <?= htmlspecialchars($post['conteudo']) ?>
                             </div>
                         </div>
-
                     </div>
                 <?php endforeach; ?>
             <?php endif; ?>

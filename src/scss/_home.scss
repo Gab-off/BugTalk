@@ -223,3 +223,21 @@ aside {
     }
   }
 }
+
+// Em _home.scss ou em um novo arquivo _post-card.scss
+
+.post-tags {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag-item {
+  background-color: variables.$tags-bg_dark; // Usando sua variável
+  color: variables.$form-input_fontColor;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px; // Para fazer um "pill"
+  font-size: 0.75rem; // 12px
+  font-weight: 500;
+}

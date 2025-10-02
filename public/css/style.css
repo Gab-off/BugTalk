@@ -432,6 +432,22 @@ aside div a {
   margin-bottom: 0.5rem;
 }
 
+.post-tags {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag-item {
+  background-color: #0C515D;
+  color: #97EFFF;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
 .criar_bg {
   background: linear-gradient(180deg, #08262B, #026C7F);
 }

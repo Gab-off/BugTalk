@@ -1,7 +1,7 @@
 <?php require_once __DIR__ . '/../layouts/head.php'; ?>
-<?php require_once __DIR__ . '/../layouts/header.php'; ?>
 <body class="admin-page-bg">
 <main class="container admin-container">
+<?php require_once __DIR__ . '/../layouts/header.php'; ?>
     <h1 class="admin-title">Gerenciamento de Usuários</h1>
 
     <div class="admin-card">

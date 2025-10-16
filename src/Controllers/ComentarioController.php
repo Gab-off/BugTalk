@@ -2,9 +2,12 @@
 namespace App\Controllers;
 
 use App\Models\Comentario;
+use App\Core\AuthGuard;
 
 class ComentarioController {
+    use AuthGuard;
     public function criar() {
+        $this->checkAuth();
         if (!isset($_SESSION['id_usuario'])) {
             header('Location: /login');
             exit();

@@ -27,7 +27,8 @@ class Usuario
     {
         $senhaHash = password_hash($dados['senha'], PASSWORD_DEFAULT);
 
-        $query = 'CREATE (n:Usuario {nome: $nome, email: $email, senha: $senha, data_cadastro: datetime(), admin: false})';
+        // Inicializando todas as propriedades necessárias, incluindo banned e timeoutUntil
+        $query = 'CREATE (n:Usuario {nome: $nome, email: $email, senha: $senha, data_cadastro: datetime(), isAdmin: false, banned: false})';
 
         try {
             $this->client->run($query, [
@@ -48,7 +49,13 @@ class Usuario
      */
     public function findByEmail(string $email)
     {
-        $query = 'MATCH (n:Usuario) WHERE n.email = $email RETURN n.senha AS senha, id(n) AS id, n.nome AS nome, n.admin AS isAdmin LIMIT 1';;
+        $query = 'MATCH (n:Usuario) WHERE n.email = $email RETURN   n, 
+                                                                    n.senha AS senha, 
+                                                                    id(n) AS id, 
+                                                                    n.nome AS nome, 
+                                                                    COALESCE(n.isAdmin, false) AS isAdmin,
+                                                                    COALESCE(n.banned, false) AS banned,
+                                                                    n.timeoutUntil AS timeoutUntil LIMIT 1';
         $result = $this->client->run($query, ['email' => $email]);
 
         if ($result->isEmpty()) {
@@ -57,8 +64,6 @@ class Usuario
 
         return $result->first();
     }
-
-    // Dentro da classe App\Models\Usuario
 
     /**
      * Encontra um usuário pelo seu ID interno do Neo4j.
@@ -71,7 +76,7 @@ class Usuario
             $query = '
             MATCH (u:Usuario) 
             WHERE id(u) = $id_usuario 
-            RETURN u.nome AS nome, u.email AS email, id(u) AS id
+            RETURN u.nome AS nome, u.email AS email, id(u) AS id, u.isAdmin AS isAdmin
             LIMIT 1
         ';
             $result = $this->client->run($query, ['id_usuario' => $id_usuario]);
@@ -88,8 +93,6 @@ class Usuario
         }
     }
 
-    // Dentro da classe App\Models\Usuario
-
     /**
      * Busca todos os usuários e a contagem de posts de cada um para a área de admin.
      * @return array
@@ -102,7 +105,12 @@ class Usuario
             $query = '
             MATCH (u:Usuario)
             OPTIONAL MATCH (u)-[:POSTED]->(p:POST)
-            RETURN u.nome AS nome, u.email AS email, id(u) AS id, count(p) AS postCount
+            RETURN  u.nome AS nome, 
+                    u.email AS email, 
+                    id(u) AS id, 
+                    count(p) AS postCount, 
+                    u.banned AS isBanned, 
+                    u.timeoutUntil AS timeoutUntil
             ORDER BY u.nome ASC
         ';
             $result = $this->client->run($query);
@@ -111,10 +119,69 @@ class Usuario
                 $usuarios[] = $record->toArray();
             }
         } catch (\Exception $e) {
-            // Em um app real, é bom registrar o erro em um arquivo de log
             error_log("Erro ao buscar usuários com contagem de posts: " . $e->getMessage());
         }
         return $usuarios;
     }
 
+    /**
+     * Aplica um timeout em um usuário por uma duração específica.
+     * @param int $id_usuario O ID do usuário.
+     * @param string $duration Uma string de intervalo de tempo (ex: 'P1D' para 1 dia, 'PT1H' para 1 hora).
+     * @return bool
+     */
+    public function timeout(int $id_usuario, string $duration = 'P1D'): bool
+    {
+        try {
+            $query = '
+            MATCH (u:Usuario) WHERE id(u) = $id_usuario
+            SET u.timeoutUntil = datetime() + duration($duration)
+        ';
+            $this->client->run($query, [
+                'id_usuario' => $id_usuario,
+                'duration' => $duration
+            ]);
+            return true;
+        } catch (\Exception $e) {
+            error_log("Erro ao aplicar timeout: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Bane permanentemente um usuário.
+     * @param int $id_usuario
+     * @return bool
+     */
+    public function ban(int $id_usuario): bool
+    {
+        try {
+            $query = 'MATCH (u:Usuario) WHERE id(u) = $id_usuario SET u.banned = true';
+            $this->client->run($query, ['id_usuario' => $id_usuario]);
+            return true;
+        } catch (\Exception $e) {
+            error_log("Erro ao banir usuário: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Remove o banimento ou o timeout de um usuário.
+     * @param int $id_usuario
+     * @return bool
+     */
+    public function pardon(int $id_usuario): bool
+    {
+        try {
+            $query = '
+            MATCH (u:Usuario) WHERE id(u) = $id_usuario
+            SET u.banned = false, u.timeoutUntil = null
+        ';
+            $this->client->run($query, ['id_usuario' => $id_usuario]);
+            return true;
+        } catch (\Exception $e) {
+            error_log("Erro ao perdoar usuário: " . $e->getMessage());
+            return false;
+        }
+    }
 }

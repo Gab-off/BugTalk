@@ -90,6 +90,16 @@ switch ($uri) {
         }
         break;
 
+    case '/admin/usuario/ban':
+        $adminController->banUsuario();
+        break;
+    case '/admin/usuario/timeout':
+        $adminController->timeoutUsuario();
+        break;
+    case '/admin/usuario/pardon':
+        $adminController->pardonUsuario();
+        break;
+
     default:
         http_response_code(404);
         echo "Página não encontrada";

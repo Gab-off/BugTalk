@@ -4,12 +4,15 @@ namespace App\Controllers;
 
 use App\Models\Post;
 use App\Models\Tag;
+use App\Core\AuthGuard;
 
 class PostController
 {
+    use AuthGuard;
 
     public function showCriarForm()
     {
+        $this->checkAuth();
         if (!isset($_SESSION['id_usuario'])) {
             header('Location: /login');
             exit();
@@ -19,6 +22,7 @@ class PostController
 
     public function criar()
     {
+        $this->checkAuth();
         if (!isset($_SESSION['id_usuario'])) {
             header('Location: /login');
             exit();
@@ -65,6 +69,7 @@ class PostController
     }
 
     public function vote() {
+        $this->checkAuth();
         if (!isset($_SESSION['id_usuario'])) {
             header('Location: /login');
             exit();

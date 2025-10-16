@@ -92,3 +92,47 @@
     color: lighten(variables.$form-input_fontColor, 5%);
   }
 }
+
+// Em src/scss/pages/_admin.scss
+.status-label {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: white;
+
+  &.active { background-color: #22c55e; } // Verde
+  &.timeout { background-color: #f97316; } // Laranja
+  &.banned { background-color: #ef4444; } // Vermelho
+}
+
+.admin-table tr {
+  &.status-timeout { background-color: rgba(249, 115, 22, 0.1); }
+  &.status-banned { background-color: rgba(239, 68, 68, 0.1); }
+}
+
+.acoes-admin {
+  display: flex;
+  gap: 1rem;
+
+  .link-acao.pardon { color: #22c55e; }
+  .link-acao.timeout { color: #f97316; }
+  .link-acao.ban { color: #ef4444; }
+}
+
+.self-tag {
+  background-color: variables.$accent-color; // Usando sua cor de destaque
+  color: variables.$form-input_fontColor; // Cor de fundo principal para o texto
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.25rem;
+  font-size: 0.7rem;
+  font-weight: bold;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+}
+
+// Estilo opcional para destacar a sua própria linha na tabela
+.admin-table tr.self-admin-row {
+  background-color: lighten(variables.$posts-bg_dark, 5%);
+  border-left: 3px solid variables.$accent-color;
+}

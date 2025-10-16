@@ -174,7 +174,7 @@ nav {
 }
 
 .form_input {
-  background: rgba(1, 150, 176, 0.1);
+  background: rgba(120, 220, 239, 0.1);
   font-family: "ProFont IIx Nerd Font Mono", monospace;
   box-shadow: 5px 4px 4px 0 rgba(0, 0, 0, 0.25);
   color: #97EFFF;
@@ -547,6 +547,60 @@ aside div a {
   color: rgb(176.5, 242.9230769231, 255);
 }
 
+.status-label {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: white;
+}
+.status-label.active {
+  background-color: #22c55e;
+}
+.status-label.timeout {
+  background-color: #f97316;
+}
+.status-label.banned {
+  background-color: #ef4444;
+}
+
+.admin-table tr.status-timeout {
+  background-color: rgba(249, 115, 22, 0.1);
+}
+.admin-table tr.status-banned {
+  background-color: rgba(239, 68, 68, 0.1);
+}
+
+.acoes-admin {
+  display: flex;
+  gap: 1rem;
+}
+.acoes-admin .link-acao.pardon {
+  color: #22c55e;
+}
+.acoes-admin .link-acao.timeout {
+  color: #f97316;
+}
+.acoes-admin .link-acao.ban {
+  color: #ef4444;
+}
+
+.self-tag {
+  background-color: #022c2c;
+  color: #97EFFF;
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.25rem;
+  font-size: 0.7rem;
+  font-weight: bold;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+}
+
+.admin-table tr.self-admin-row {
+  background-color: rgb(36.375, 98.2125, 109.125);
+  border-left: 3px solid #022c2c;
+}
+
 .post-view-container {
   padding-top: 2rem;
   padding-bottom: 4rem;
@@ -593,7 +647,7 @@ aside div a {
 }
 
 .comment-form textarea {
-  background: rgba(1, 150, 176, 0.1);
+  background: rgba(120, 220, 239, 0.1);
   font-family: "ProFont IIx Nerd Font Mono", monospace;
   box-shadow: 5px 4px 4px 0 rgba(0, 0, 0, 0.25);
   color: #97EFFF;
@@ -661,7 +715,7 @@ aside div a {
   margin-top: 1rem;
 }
 .comment-form-reply textarea {
-  background: rgba(1, 150, 176, 0.1);
+  background: rgba(120, 220, 239, 0.1);
   font-family: "ProFont IIx Nerd Font Mono", monospace;
   box-shadow: 5px 4px 4px 0 rgba(0, 0, 0, 0.25);
   color: #97EFFF;

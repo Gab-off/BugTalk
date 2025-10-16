@@ -3,9 +3,10 @@ namespace App\Controllers;
 
 use App\Models\Usuario;
 use App\Models\Post;
+use App\Core\AuthGuard;
 
 class AdminController {
-
+    use AuthGuard;
     /**
      * Este é o "guarda" de segurança. Ele será chamado no início de cada método
      * para garantir que apenas administradores acessem a página.
@@ -23,6 +24,8 @@ class AdminController {
      */
     public function showUsuarios() {
         $this->checkAdmin(); // Executa a verificação de segurança
+
+        $id_admin_logado = $_SESSION['id_usuario'];
 
         $usuarioModel = new Usuario();
         // Chama o novo método que criamos para buscar os dados
@@ -58,5 +61,41 @@ class AdminController {
 
         // 3. Carrega a View, passando as variáveis necessárias.
         require_once __DIR__ . '/../Views/admin/usuario_posts.php';
+    }
+
+    // Dentro da classe App\Controllers\AdminController
+
+    public function banUsuario() {
+        $this->checkAdmin();
+        $id_usuario = (int)($_GET['id'] ?? 0);
+        if ($id_usuario > 0) {
+            $usuarioModel = new Usuario();
+            $usuarioModel->ban($id_usuario);
+        }
+        header('Location: /admin/usuarios');
+        exit();
+    }
+
+    public function timeoutUsuario() {
+        $this->checkAdmin();
+        $id_usuario = (int)($_GET['id'] ?? 0);
+        // Por enquanto, um timeout fixo de 1 dia ('P1D' = Period 1 Day)
+        if ($id_usuario > 0) {
+            $usuarioModel = new Usuario();
+            $usuarioModel->timeout($id_usuario, 'P1D');
+        }
+        header('Location: /admin/usuarios');
+        exit();
+    }
+
+    public function pardonUsuario() {
+        $this->checkAdmin();
+        $id_usuario = (int)($_GET['id'] ?? 0);
+        if ($id_usuario > 0) {
+            $usuarioModel = new Usuario();
+            $usuarioModel->pardon($id_usuario);
+        }
+        header('Location: /admin/usuarios');
+        exit();
     }
 }

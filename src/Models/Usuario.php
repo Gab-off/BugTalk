@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+require_once __DIR__ . '/../../vendor/autoload.php';
+$dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
+$dotenv->load();
 use Laudis\Neo4j\ClientBuilder;
 
 class Usuario
@@ -10,9 +13,9 @@ class Usuario
 
     public function __construct()
     {
-        $uri = 'neo4j://127.0.0.1:7687';
-        $user = 'neo4j';
-        $password = 'password';
+        $uri = $_ENV['NEO4J_URI'];
+        $user = $_ENV['NEO4J_USER'];
+        $password = $_ENV['NEO4J_PASS'];
 
         $this->client = ClientBuilder::create()
             ->withDriver('default', $uri, \Laudis\Neo4j\Authentication\Authenticate::basic($user, $password))
@@ -181,6 +184,37 @@ class Usuario
             return true;
         } catch (\Exception $e) {
             error_log("Erro ao perdoar usuário: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Migra usuários renomeando a propriedade 'admin' para 'isAdmin'
+     * e adiciona as propriedades banned e timeoutUntil
+     * @return bool
+     */
+    public function migrateAdminProperty(): bool
+    {
+        try {
+            // Rename 'admin' to 'isAdmin'
+            $query1 = 'MATCH (u:Usuario) WHERE u.admin IS NOT NULL SET u.isAdmin = u.admin REMOVE u.admin';
+            $this->client->run($query1);
+
+            // Ensure all users have isAdmin (set to false if missing)
+            $query2 = 'MATCH (u:Usuario) SET u.isAdmin = COALESCE(u.isAdmin, false)';
+            $this->client->run($query2);
+
+            // Ensure all users have banned
+            $query3 = 'MATCH (u:Usuario) SET u.banned = COALESCE(u.banned, false)';
+            $this->client->run($query3);
+
+            // Ensure all users have timeoutUntil
+            $query4 = 'MATCH (u:Usuario) SET u.timeoutUntil = COALESCE(u.timeoutUntil, null)';
+            $this->client->run($query4);
+
+            return true;
+        } catch (\Exception $e) {
+            error_log("Erro ao migrar propriedade admin: " . $e->getMessage());
             return false;
         }
     }

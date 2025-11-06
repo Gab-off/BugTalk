@@ -1,7 +1,9 @@
 <?php
-
 namespace App\Models;
 
+require_once __DIR__ . '/../../vendor/autoload.php';
+$dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
+$dotenv->load();
 use Laudis\Neo4j\ClientBuilder;
 use Laudis\Neo4j\Authentication\Authenticate;
 
@@ -11,9 +13,9 @@ class Post
 
     public function __construct()
     {
-        $uri = 'neo4j://127.0.0.1:7687';
-        $user = 'neo4j';
-        $password = 'password';
+        $uri = $_ENV['NEO4J_URI'];
+        $user = $_ENV['NEO4J_USER'];
+        $password = $_ENV['NEO4J_PASS'];
 
         $this->client = ClientBuilder::create()
             ->withDriver('default', $uri, Authenticate::basic($user, $password))

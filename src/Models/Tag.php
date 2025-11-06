@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+require_once __DIR__ . '/../../vendor/autoload.php';
+$dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
+$dotenv->load();
 // Importando as classes no topo (melhor prática)
 use Laudis\Neo4j\ClientBuilder;
 use Laudis\Neo4j\Authentication\Authenticate;
@@ -14,9 +17,9 @@ class Tag
     {
         try {
             // Tenta se conectar. Usar bolt:// é mais direto para conexões locais.
-            $uri = 'bolt://127.0.0.1:7687';
-            $user = 'neo4j';
-            $password = 'password'; // Garanta que esta é a senha do seu Neo4j Desktop
+            $uri = $_ENV['NEO4J_URI'];
+            $user = $_ENV['NEO4J_USER'];
+            $password = $_ENV['NEO4J_PASS']; // Garanta que esta é a senha do seu Neo4j Desktop
 
             $this->client = ClientBuilder::create()
                 ->withDriver('default', $uri, Authenticate::basic($user, $password))

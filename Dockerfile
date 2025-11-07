@@ -20,6 +20,10 @@ COPY src/Views/ /var/www/html/Views/
 # Copia o arquivo de ambiente
 COPY .env /var/www/html/.env
 
+COPY default-ssl.conf /etc/apache2/sites-available/default-ssl.conf
+RUN a2enmod ssl && a2ensite default-ssl
+
+
 # Ajusta permissões (se necessário para ambiente Docker)
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html

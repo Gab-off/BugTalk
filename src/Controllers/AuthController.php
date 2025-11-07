@@ -12,7 +12,7 @@ class AuthController
             header('Location: /');
             exit();
         }
-        require_once '../src/Views/auth/login.php';
+        require_once __DIR__ .  '/../Views/auth/login.php';
     }
 
     public function login()
@@ -63,7 +63,7 @@ class AuthController
             exit();
         } else {
             $erro = 'Email ou senha inválidos.';
-            require_once '../src/Views/auth/login.php';
+            require_once __DIR__ .  '/../Views/auth/login.php';
         }
     }
 

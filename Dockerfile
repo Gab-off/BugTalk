@@ -16,7 +16,7 @@ COPY vendor/ /var/www/html/vendor/
 
 # Copia os fontes PHP da aplicação
 COPY src/ /var/www/html/src/
-
+COPY src/Views/ /var/www/html/Views/
 # Copia o arquivo de ambiente
 COPY .env /var/www/html/.env
 

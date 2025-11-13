@@ -381,9 +381,6 @@
   .h-10 {
     height: calc(var(--spacing) * 10);
   }
-  .h-\[100vh\] {
-    height: 100vh;
-  }
   .h-\[calc\(100vh-100px\)\] {
     height: calc(100vh - 100px);
   }
@@ -1111,13 +1108,6 @@
     &:hover {
       @media (hover: hover) {
         background-color: var(--color-cyan-700);
-      }
-    }
-  }
-  .hover\:bg-cyan-800 {
-    &:hover {
-      @media (hover: hover) {
-        background-color: var(--color-cyan-800);
       }
     }
   }

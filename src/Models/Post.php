@@ -146,7 +146,7 @@ class Post
                 id(p) AS id_alvo,
                 r.created_at AS data_evento
                             
-            ORDER BY data_evento DESC
+            ORDER BY data_evento 
             LIMIT $limit
             ';
             $result = $this->client->run($query, ['limit' => $limit]);

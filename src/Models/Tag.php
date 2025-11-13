@@ -49,13 +49,16 @@ class Tag
      * Busca todas as tags existentes no banco para listar na sidebar.
      * @return array
      */
-    public function findAll(): array
-    {
-        $query = 'MATCH (t:Tag) RETURN t.nome AS nome ORDER BY t.nome';
+    public function findAll(): array {
+        $query = 'MATCH (t:Tag) RETURN id(t) AS id, t.nome AS nome ORDER BY t.nome';
         $result = $this->client->run($query);
+
         $tags = [];
         foreach ($result as $record) {
-            $tags[] = $record->get('nome');
+            $tags[] = [
+                'id' => $record->get('id'),
+                'nome' => $record->get('nome')
+            ];
         }
         return $tags;
     }

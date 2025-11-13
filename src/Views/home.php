@@ -69,7 +69,7 @@
                             <!--user icon image-->
                             <!--TODO: add user page-->
                             <a href="#">
-                                <img src="/assets/imgs/icons/icon_user.svg" alt="imagem do usuário" class="w-5 h-5
+                                <img src="/assets/imgs/icons/icon_user.svg" alt="imagem do usuário" class="w-10 h-10
                                 object-contain p-1 ">
                             </a>
 
@@ -102,7 +102,7 @@
                                     <input type="hidden" name="post_id" value="<?= $post['id'] ?>">
                                     <button type="submit"
                                             class="flex flex-col items-center gap-1 text-sm md:text-md hover:text-cyan-400 transition-colors
-                       <?php if ($post['userHasVoted']): ?>text-cyan-400 animate-pulse<?php endif; ?>">
+                       <?php if ($post['user_has_voted']): ?>text-cyan-400 animate-pulse<?php endif; ?>">
                                         <img src="/assets/imgs/icons/upvote_icon.svg"
                                              alt="seta apontada para cima para dar upvote"
                                              class="w-6 h-6">

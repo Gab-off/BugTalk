@@ -2,9 +2,9 @@
 
 namespace App\Controllers;
 
+use App\Core\AuthGuard;
 use App\Models\Post;
 use App\Models\Tag;
-use App\Core\AuthGuard;
 
 class PostController
 {
@@ -17,10 +17,74 @@ class PostController
             header('Location: /login');
             exit();
         }
+
+        // Buscar tags disponíveis
+        $tagModel = new Tag();
+        $tags = $tagModel->findAll();
+
         require_once __DIR__ . '/../Views/posts/criar.php';
     }
 
     public function criar()
+    {
+        $this->checkAuth();
+
+        if (!isset($_SESSION['id_usuario'])) {
+            header('Location: /login');
+            exit;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header('Location: /post/criar');
+            exit;
+        }
+
+        // Capturar dados
+        $titulo = trim($_POST['titulo'] ?? '');
+        $texto = trim($_POST['texto'] ?? '');
+        $codigo = trim($_POST['codigo'] ?? '');
+        $linguagem = $_POST['language'] ?? 'javascript';
+        $tag_ids = $_POST['tags'] ?? [];
+        $id_usuario = $_SESSION['id_usuario'];
+        $erro = null;
+
+        // Validar campos obrigatórios
+        if (empty($titulo) || empty($texto)) {
+            $erro = 'Título e conteúdo são obrigatórios.';
+            $tagModel = new Tag();
+            $tags = $tagModel->findAll();
+            require_once __DIR__ . '/../Views/posts/criar.php';
+            return;
+        }
+
+        // Por enquanto, imagem fica como null
+        $imagem_url = null;
+
+        // Criar post
+        $postModel = new Post();
+        $id_post_criado = $postModel->create([
+            'titulo' => $titulo,
+            'conteudo' => $texto,
+            'codigo' => $codigo,
+            'linguagem' => $linguagem,
+            'imagem_url' => $imagem_url,
+            'id_usuario' => $id_usuario,
+            'tag_ids' => $tag_ids
+        ]);
+
+        if ($id_post_criado !== null) {
+            header('Location: /post/ver?id=' . $id_post_criado);
+            exit;
+        } else {
+            $erro = 'Ocorreu um erro ao criar seu post. Tente novamente.';
+            $tagModel = new Tag();
+            $tags = $tagModel->findAll();
+            require_once __DIR__ . '/../Views/posts/criar.php';
+            return;
+        }
+    }
+
+    public function vote()
     {
         $this->checkAuth();
         if (!isset($_SESSION['id_usuario'])) {
@@ -28,54 +92,7 @@ class PostController
             exit();
         }
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $titulo = trim($_POST['titulo'] ?? '');
-            $conteudo = trim($_POST['conteudo'] ?? '');
-            $tagsInput = trim($_POST['tags'] ?? '');
-            $id_usuario = $_SESSION['id_usuario'];
-        }
-
-        if (empty($titulo) || empty($conteudo)) {
-            $erro = 'Título e conteúdo são obrigatórios.';
-            require_once __DIR__ . '/../Views/posts/criar.php';
-            return;
-        }
-
-        $postModel = new Post();
-        $tagModel = new Tag();
-
-        $id_post_criado = $postModel->create([
-            'titulo' => $titulo,
-            'conteudo' => $conteudo,
-            'id_usuario' => $_SESSION['id_usuario']
-        ]);
-
-        if ($id_post_criado !== null) {
-            //Separa as tags digitadas com vírgula
-            $tagsArray = explode(',', $tagsInput);
-            foreach ($tagsArray as $nomeTag) {
-                $nomeTag = trim(strtolower($nomeTag));
-                if (!empty($nomeTag)) {
-                    $id_tag = $tagModel->findOrCreateByName($nomeTag);
-                    $postModel->associarTag($id_post_criado, $id_tag);
-                }
-            }
-            header('Location: /');
-            exit();
-        } else {
-            $erro = 'Ocorreu um erro ao criar seu post. Tente novamente.';
-            require_once __DIR__ . '/../Views/posts/criar.php';
-        }
-    }
-
-    public function vote() {
-        $this->checkAuth();
-        if (!isset($_SESSION['id_usuario'])) {
-            header('Location: /login');
-            exit();
-        }
-
-        $id_post = (int) ($_POST['post_id'] ?? 0);
+        $id_post = (int)($_POST['post_id'] ?? 0);
         $id_usuario = $_SESSION['id_usuario'];
 
         if ($id_post > 0) {
@@ -83,7 +100,7 @@ class PostController
             $postModel->toggleVote($id_post, $id_usuario);
         }
 
-        header('Location: '. $_SERVER['HTTP_REFERER'] ?? '/' );;
+        header('Location: ' . $_SERVER['HTTP_REFERER'] ?? '/');;
         exit();
     }
 
@@ -94,11 +111,13 @@ class PostController
     /**
      * Exibe um único post e seus comentários.
      */
-    public function show() {
+    public function show()
+    {
         $id_post = (int)($_GET['id'] ?? 0);
+        $id_usuario_logado = $_SESSION['id_usuario'] ?? null;  // ← ADICIONE ISSO
 
         $postModel = new Post();
-        $post = $postModel->findById($id_post); // Supondo que findById exista
+        $post = $postModel->findById($id_post, $id_usuario_logado);  // ← PASSE AQUI
 
         if (!$post) {
             http_response_code(404);

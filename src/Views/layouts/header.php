@@ -5,7 +5,7 @@
                 <!--TODO: add user page link-->
                 <a href="/"
                    class="px-4 py-2 bg-cyan-950 rounded-md text-white"><?= htmlspecialchars($_SESSION['usuario_nome']) ?></a>
-                <a href="/logout" class="px-4 py-2 bg-cyan-800 rounded-md text-white">Deslogar</a>
+                <a href="/logout" class="px-4 py-2 bg-cyan-800 rounded-md text-white">deslogar</a>
             </div>
         <?php else : ?>
             <a href="/login" class="px-4 py-2 bg-cyan-950 rounded-md text-white">Login</a>

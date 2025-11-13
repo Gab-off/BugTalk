@@ -51,9 +51,9 @@
                         alta</a>
                     <a href="#"
                        class="text-sm px-2 py-1 md:px-4 md:py-2 bg-none border border-cyan-500 rounded-md text-white">Ajuda</a>
-                    <a href="/post/create"
+                    <a href="/post/criar"
                        class="text-sm px-2 py-1 md:px-4 md:py-2 bg-cyan-200 border border-cyan-500 rounded-md text-cyan-800 md:hidden">+</a>
-                    <a href="/post/create"
+                    <a href="/post/criar"
                        class="text-sm px-2 py-1 md:px-4 md:py-2 bg-cyan-200 border border-cyan-500 rounded-md text-cyan-800 hidden md:inline">Postar</a>
                 </div>
             </section>
@@ -69,8 +69,8 @@
                             <!--user icon image-->
                             <!--TODO: add user page-->
                             <a href="#">
-                                <img src="/assets/imgs/icons/icon_user.svg" alt="imagem do usuário" class="rounded-full w-15 h-15
-                                object-contain p-1 bg-cyan-950">
+                                <img src="/assets/imgs/icons/icon_user.svg" alt="imagem do usuário" class="w-5 h-5
+                                object-contain p-1 ">
                             </a>
 
                             <!-- name user and title post-->
@@ -145,27 +145,35 @@
         </div>
 
         <div class="hidden border rounded-md border-cyan-300 lg:block lg:justify-self-end px-2 py-4">
-            <h2 class="text-center mb-4">Atividades recentes</h2>
+            <h2 class="text-center mb-4 text-cyan-300 font-semibold">Atividades recentes</h2>
             <?php if (empty($atividades)): ?>
-                <p>Nenhuma atividade recente</p>
+                <p class="text-cyan-100 text-sm">Nenhuma atividade recente</p>
             <?php else: ?>
                 <?php foreach ($atividades as $atividade): ?>
-                    <div class="grid grid-cols-[50px_1fr] border mb-2 border-cyan-300">
-                        <div class="flex bg-cyan-500">
-                            <img src="/assets/img/user.svg" alt="">
+                    <div class="grid grid-cols-[50px_1fr] gap-2 border mb-2 border-cyan-300 rounded p-2 hover:bg-cyan-950/30 transition">
+                        <div class="flex items-center justify-center bg-cyan-500 rounded overflow-hidden">
+                            <img src="/assets/img/user.svg" alt="avatar" class="w-full h-full object-cover">
                         </div>
 
-                        <div class="text-sm px-1 text-cyan-100 ">
-                            <p class=""><a
-                                        href="/post/ver?id=<?= $atividade['id_alvo'] ?>"><?= htmlspecialchars($atividade['autor']) ?></a>
+                        <div class="text-xs px-1 text-cyan-100">
+                            <p class="">
+                                <a href="/post/ver?id=<?= $atividade['id_alvo'] ?>"
+                                   class="text-cyan-400 hover:underline">
+                                    <?= htmlspecialchars($atividade['autor']) ?>
+                                </a>
                             </p>
-                            <?= htmlspecialchars($atividade['tipo_evento']) ?>
-                            <p>"<?= htmlspecialchars(substr($atividade['titulo_alvo'], 0, 25)) ?>..."</p>
+                            <p class="text-cyan-200">
+                                <?= htmlspecialchars($atividade['tipo_evento']) ?>
+                            </p>
+                            <p class="text-cyan-100 truncate">
+                                "<?= htmlspecialchars(substr($atividade['titulo_alvo'], 0, 30)) ?>..."
+                            </p>
                         </div>
                     </div>
                 <?php endforeach; ?>
             <?php endif; ?>
         </div>
+
     </div>
     </body>
 <?php require_once __DIR__ . '/layouts/footer.php'; ?>

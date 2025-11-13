@@ -118,6 +118,7 @@ class Post
         $activities = [];
         try {
             $query = '
+        CALL {
             MATCH (u:Usuario)-[:POSTED]->(p:POST)
             RETURN
                 u.nome AS autor,
@@ -145,10 +146,12 @@ class Post
                 p.titulo AS titulo_alvo,
                 id(p) AS id_alvo,
                 r.created_at AS data_evento
-                            
-            ORDER BY data_evento 
-            LIMIT $limit
-            ';
+        }
+        RETURN autor, tipo_evento, titulo_alvo, id_alvo, data_evento
+        ORDER BY data_evento DESC
+        LIMIT $limit
+        ';
+
             $result = $this->client->run($query, ['limit' => $limit]);
             foreach ($result as $record) {
                 $activities[] = $record->toArray();
@@ -158,6 +161,7 @@ class Post
         }
         return $activities;
     }
+
 
     /**
      * Adiciona ou remove um upvote de um usuário em um post.

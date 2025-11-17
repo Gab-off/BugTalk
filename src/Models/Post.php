@@ -159,7 +159,7 @@ class Post
         try {
             $query = '
         CALL {
-            MATCH (u:Usuario)-[:POSTED]->(p:POST)
+            MATCH (u:Usuario)-[:POSTED]->(p:Post)
             RETURN
                 u.nome AS autor,
                 "criou o post:" AS tipo_evento,
@@ -169,7 +169,7 @@ class Post
                 
             UNION
             
-            MATCH (u:Usuario)-[:COMENTOU]->(c:Comentario)-[:É_RESPOSTA_DE]->(p:POST)
+            MATCH (u:Usuario)-[:COMENTOU]->(c:Comentario)-[:É_RESPOSTA_DE]->(p:Post)
             RETURN
                 u.nome AS autor,
                 "comentou em:" AS tipo_evento,
@@ -179,7 +179,7 @@ class Post
                 
             UNION
             
-            MATCH (u:Usuario)-[r:VOTED_UP]->(p:POST)
+            MATCH (u:Usuario)-[r:VOTED_UP]->(p:Post)
             RETURN
                 u.nome AS autor,
                 "deu um upvote em:" AS tipo_evento,
@@ -353,7 +353,7 @@ class Post
         $posts = [];
         try {
             $query = '
-            MATCH (u:Usuario)-[:POSTED]->(p:POST)
+            MATCH (u:Usuario)-[:POSTED]->(p:Post)
             WHERE id(u) = $id_usuario
             RETURN p.titulo AS titulo, p.conteudo AS conteudo, p.data_criacao AS data, id(p) AS id
             ORDER BY p.data_criacao DESC

@@ -88,7 +88,7 @@ class PostController
     {
         $this->checkAuth();
         if (!isset($_SESSION['id_usuario'])) {
-            echo json_enconde(['success' => false, 'error' => 'not_logged_in']);
+            header('Location: /login');
             exit();
         }
 
@@ -98,12 +98,9 @@ class PostController
         if ($id_post > 0) {
             $postModel = new Post();
             $postModel->toggleVote($id_post, $id_usuario);
-
-            $result = $postModel->findById($id_post, $id_usuario);
-            $upvotes = $result['upvotes'] ?? 0;
-            echo json_encode(['success' => true, 'novo_total' => $upvotes]);
         }
-        echo json_encode(['success' => false, 'error' => 'invalid_post']);
+
+        header('Location: ' . $_SERVER['HTTP_REFERER'] ?? '/');;
         exit();
     }
 

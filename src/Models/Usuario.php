@@ -107,7 +107,7 @@ class Usuario
             // Esta query usa OPTIONAL MATCH, que busca por posts, mas não falha se um usuário não tiver nenhum.
             $query = '
             MATCH (u:Usuario)
-            OPTIONAL MATCH (u)-[:POSTED]->(p:Post)
+            OPTIONAL MATCH (u)-[:POSTED]->(p:POST)
             RETURN  u.nome AS nome, 
                     u.email AS email, 
                     id(u) AS id, 

@@ -152,7 +152,7 @@
                 <?php foreach ($atividades as $atividade): ?>
                     <div class="grid grid-cols-[50px_1fr] gap-2 border mb-2 border-cyan-300 rounded p-2 hover:bg-cyan-950/30 transition">
                         <div class="flex items-center justify-center bg-cyan-500 rounded overflow-hidden">
-                            <img src="/assets/img/user.svg" alt="avatar" class="w-full h-full object-cover">
+                            <img src="/assets/imgs/icons/icon_user.svg" alt="avatar" class="w-full h-full object-cover">
                         </div>
 
                         <div class="text-xs px-1 text-cyan-100">

@@ -22,7 +22,7 @@ class UsuarioController
 
         if (empty($nome) || empty($email) || empty($senha)) {
             $erro = "Todos os campos são obrigatórios.";
-            require_once __DIR__ . '/Views/usuarios/cadastrar.php';
+            require_once __DIR__ . '/../Views/usuarios/cadastrar.php';
             return;
         }
 
@@ -30,7 +30,7 @@ class UsuarioController
 
         if ($usuarioModel->findByEmail($email)) {
             $erro = "Este e-mail já está em uso.";
-            require_once __DIR__ . '/Views/usuarios/cadastrar.php';
+            require_once __DIR__ . '/../Views/usuarios/cadastrar.php';
             return;
         }
 
@@ -45,7 +45,7 @@ class UsuarioController
             exit();
         } else {
             $erro = "Ocorreu um erro ao criar sua conta. Tente novamente.";
-            require_once __DIR__ . '/Views/usuarios/cadastrar.php';
+            require_once __DIR__ . '/../Views/usuarios/cadastrar.php';
         }
     }
 }

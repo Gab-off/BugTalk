@@ -98,17 +98,12 @@
                             </div>
 
                             <div class="row-start-3 md:row-start-2 justify-self-center">
-                                <form action="/post/vote" method="POST" class="flex flex-col items-center gap-1">
-                                    <input type="hidden" name="post_id" value="<?= $post['id'] ?>">
-                                    <button type="submit"
-                                            class="flex flex-col items-center gap-1 cursor-pointer text-sm md:text-md hover:text-cyan-400 transition-colors
-                       <?php if ($post['user_has_voted']): ?>text-cyan-400 animate-pulse<?php endif; ?>">
-                                        <img src="/assets/imgs/icons/upvote_icon.svg"
-                                             alt="seta apontada para cima para dar upvote"
-                                             class="w-6 h-6">
-                                        <span><?= $post['upvotes'] ?></span>
-                                    </button>
-                                </form>
+
+                                <button type="button" class="upvote-btn" data-postid="<?= $post['id'] ?>">Upvote
+                                </button>
+                                <span class="upvote-count"
+                                      id="upvote_count_<?= $post['id'] ?>"><?= $post['upvotes'] ?></span>
+
                             </div>
 
 
@@ -175,5 +170,34 @@
         </div>
 
     </div>
+    <script>
+        document.querySelectorAll('.upvote-btn').forEach(btn => {
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                const postId = this.getAttribute('data-postid');
+                console.log('Clique no botão upvote', postId); // Debug visual
+                const btnEl = this;
+                btnEl.disabled = true;
+                fetch('ajax_vote.php', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                    body: 'post_id=' + encodeURIComponent(postId)
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            document.getElementById('upvote_count_' + postId).textContent = data.novo_total;
+                        } else {
+                            alert('Falha ao votar: ' + (data.error || 'Erro'));
+                        }
+                        btnEl.disabled = false;
+                    })
+                    .catch(() => {
+                        alert('Erro de conexão');
+                        btnEl.disabled = false;
+                    });
+            });
+        });
+    </script>
     </body>
 <?php require_once __DIR__ . '/layouts/footer.php'; ?>

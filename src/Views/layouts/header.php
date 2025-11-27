@@ -2,14 +2,18 @@
     <nav class="flex gap-4 hidden md:flex md:items-center">
         <?php if (isset($_SESSION['id_usuario'])) : ?>
             <div class="buttons_div">
-                <!--TODO: add user page link-->
-                <a href="/"
-                   class="px-4 py-2 bg-cyan-950 rounded-md text-white"><?= htmlspecialchars($_SESSION['usuario_nome']) ?></a>
-                <a href="/logout" class="px-4 py-2 bg-cyan-800 rounded-md text-white">deslogar</a>
+                <a href="#" class="px-4 py-2 bg-cyan-950 rounded-md text-white">
+                    <?= htmlspecialchars($_SESSION['usuario_nome']) ?>
+                </a>
+                <?php if (isset($_SESSION['usuario_isAdmin']) && $_SESSION['usuario_isAdmin'] === TRUE) : ?>
+                    <a href="/admin/usuarios" class="px-4 py-2 bg-emerald-700 rounded-md text-white ml-2">Administrador</a>
+                <?php endif; ?>
+                <a href="logout" class="px-4 py-2 bg-cyan-800 rounded-md text-white">deslogar</a>
+                <?= var_dump($_SESSION['usuario_isAdmin']) ?>
             </div>
         <?php else : ?>
-            <a href="/login" class="px-4 py-2 bg-cyan-950 rounded-md text-white">Login</a>
-            <a href="/cadastro" class="px-4 py-2 bg-cyan-800 rounded-md text-white">Cadastrar-se</a>
+            <a href="login" class="px-4 py-2 bg-cyan-950 rounded-md text-white">Login</a>
+            <a href="cadastro" class="px-4 py-2 bg-cyan-800 rounded-md text-white">Cadastrar-se</a>
         <?php endif; ?>
     </nav>
 

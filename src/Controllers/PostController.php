@@ -86,21 +86,45 @@ class PostController
 
     public function vote()
     {
+        // Sempre retornar JSON
+        header('Content-Type: application/json');
+
         $this->checkAuth();
+
         if (!isset($_SESSION['id_usuario'])) {
-            header('Location: /login');
+            echo json_encode(['success' => false, 'error' => 'not_logged_in']);
             exit();
         }
 
         $id_post = (int)($_POST['post_id'] ?? 0);
         $id_usuario = $_SESSION['id_usuario'];
 
-        if ($id_post > 0) {
-            $postModel = new Post();
-            $postModel->toggleVote($id_post, $id_usuario);
+        if ($id_post <= 0) {
+            echo json_encode(['success' => false, 'error' => 'invalid_post']);
+            exit();
         }
 
-        header('Location: ' . $_SERVER['HTTP_REFERER'] ?? '/');;
+        try {
+            $postModel = new Post();
+            $postModel->toggleVote($id_post, $id_usuario);
+
+            // Busca o post atualizado
+            $result = $postModel->findById($id_post, $id_usuario);
+
+            if ($result) {
+                echo json_encode([
+                    'success' => true,
+                    'novo_total' => $result['upvotes'],
+                    'user_has_voted' => $result['user_has_voted']
+                ]);
+            } else {
+                echo json_encode(['success' => false, 'error' => 'post_not_found']);
+            }
+        } catch (\Exception $e) {
+            error_log("Erro no vote: " . $e->getMessage());
+            echo json_encode(['success' => false, 'error' => 'server_error']);
+        }
+
         exit();
     }
 

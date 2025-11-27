@@ -5,6 +5,7 @@ namespace App\Models;
 require_once __DIR__ . '/../../vendor/autoload.php';
 $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
 $dotenv->load();
+
 use Laudis\Neo4j\ClientBuilder;
 
 class Usuario
@@ -106,16 +107,18 @@ class Usuario
         try {
             // Esta query usa OPTIONAL MATCH, que busca por posts, mas não falha se um usuário não tiver nenhum.
             $query = '
-            MATCH (u:Usuario)
-            OPTIONAL MATCH (u)-[:POSTED]->(p:POST)
-            RETURN  u.nome AS nome, 
-                    u.email AS email, 
-                    id(u) AS id, 
-                    count(p) AS postCount, 
-                    u.banned AS isBanned, 
-                    u.timeoutUntil AS timeoutUntil
-            ORDER BY u.nome ASC
-        ';
+    MATCH (u:Usuario)
+    OPTIONAL MATCH (u)-[:POSTED]->(p:Post)
+    RETURN 
+        u.nome AS nome,
+        u.email AS email, 
+        id(u) AS id,
+        u.isAdmin AS isAdmin,
+        count(p) AS postCount,
+        u.banned AS isBanned,
+        u.timeoutUntil AS timeoutUntil
+    ORDER BY u.nome ASC
+';
             $result = $this->client->run($query);
 
             foreach ($result as $record) {

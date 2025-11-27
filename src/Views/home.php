@@ -97,18 +97,39 @@
                                             alt="ícone de favoritar postagem"></a>
                             </div>
 
-                            <div class="row-start-3 md:row-start-2 justify-self-center">
-                                <form action="/post/vote" method="POST" class="flex flex-col items-center gap-1">
-                                    <input type="hidden" name="post_id" value="<?= $post['id'] ?>">
-                                    <button type="submit"
-                                            class="flex flex-col items-center gap-1 text-sm md:text-md hover:text-cyan-400 transition-colors
-                       <?php if ($post['user_has_voted']): ?>text-cyan-400 animate-pulse<?php endif; ?>">
-                                        <img src="/assets/imgs/icons/upvote_icon.svg"
-                                             alt="seta apontada para cima para dar upvote"
-                                             class="w-6 h-6">
-                                        <span><?= $post['upvotes'] ?></span>
+                            <div class="row-start-3 md:row-start-2 justify-self-center flex flex-col items-center gap-1">
+                                <?php if (isset($_SESSION['id_usuario'])): ?>
+                                    <!-- Usuário logado - botão funcional -->
+                                    <button type="button"
+                                            class="upvote-btn transition-colors <?= $post['user_has_voted'] ? 'text-cyan-400' : 'text-cyan-500/50' ?> hover:text-cyan-300 cursor-pointer"
+                                            data-postid="<?= $post['id'] ?>">
+                                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M7 14H5v5h5v2H3v-7H1l6-6 6 6h-2v-2H7v2zm10-2h2V7h-5V5h7v7h2l-6 6-6-6h2v2h4v-2z"/>
+                                        </svg>
                                     </button>
-                                </form>
+                                <?php else: ?>
+                                    <!-- Usuário não logado - botão com tooltip -->
+                                    <div class="relative group">
+                                        <button type="button"
+                                                class="text-cyan-500/30 cursor-not-allowed"
+                                                disabled
+                                                title="Faça login para votar">
+                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M7 14H5v5h5v2H3v-7H1l6-6 6 6h-2v-2H7v2zm10-2h2V7h-5V5h7v7h2l-6 6-6-6h2v2h4v-2z"/>
+                                            </svg>
+                                        </button>
+                                        <!-- Tooltip -->
+                                        <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-slate-800 text-cyan-300 text-xs rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                                            <a href="/login" class=" hover:text-cyan-400 underline">Faça login</a>
+                                            <div class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-slate-800"></div>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+
+                                <span class="upvote-count text-white text-sm font-semibold"
+                                      id="upvote_count_<?= $post['id'] ?>">
+        <?= $post['upvotes'] ?>
+    </span>
                             </div>
 
 
@@ -175,5 +196,89 @@
         </div>
 
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const upvoteButtons = document.querySelectorAll('.upvote-btn');
+
+            upvoteButtons.forEach(btn => {
+                btn.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    // Verifica se está logado
+                    if (this.disabled) {
+                        alert('Você precisa fazer login para votar');
+                        return;
+                    }
+
+                    const postId = this.getAttribute('data-postid');
+                    const btnEl = this;
+                    const countEl = document.getElementById('upvote_count_' + postId);
+
+                    // Desabilita o botão durante a requisição
+                    btnEl.disabled = true;
+                    btnEl.style.opacity = '0.5';
+
+                    // Faz a requisição AJAX
+                    fetch('/post/vote', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: 'post_id=' + encodeURIComponent(postId)
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Erro na resposta do servidor');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data.success) {
+                                // Atualiza o contador
+                                countEl.textContent = data.novo_total;
+
+                                // Alterna a cor do botão baseado no estado do voto
+                                if (data.user_has_voted) {
+                                    btnEl.classList.remove('text-cyan-500/50');
+                                    btnEl.classList.add('text-cyan-400');
+                                } else {
+                                    btnEl.classList.remove('text-cyan-400');
+                                    btnEl.classList.add('text-cyan-500/50');
+                                }
+
+                                // Animação de feedback
+                                countEl.style.transform = 'scale(1.3)';
+                                setTimeout(() => {
+                                    countEl.style.transform = 'scale(1)';
+                                }, 200);
+
+                            } else {
+                                // Trata erros específicos
+                                if (data.error === 'not_logged_in') {
+                                    alert('Você precisa fazer login para votar');
+                                    window.location.href = '/login';
+                                } else {
+                                    alert('Erro ao votar: ' + (data.error || 'Erro desconhecido'));
+                                }
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Erro:', error);
+                            alert('Erro de conexão. Tente novamente.');
+                        })
+                        .finally(() => {
+                            // Reabilita o botão
+                            btnEl.disabled = false;
+                            btnEl.style.opacity = '1';
+                        });
+                });
+            });
+
+            // Adiciona transição suave ao contador
+            document.querySelectorAll('.upvote-count').forEach(el => {
+                el.style.transition = 'transform 0.2s ease';
+            });
+        });
+    </script>
     </body>
 <?php require_once __DIR__ . '/layouts/footer.php'; ?>

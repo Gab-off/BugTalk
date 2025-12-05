@@ -1,11 +1,11 @@
 <?php require_once __DIR__ . '/layouts/head.php'; ?>
-    <body class="font-mono max-w-[1440px] mx-auto items-center  h-screen px-2 md:px-8 lg:px-12 bg-gradient-to-b from-[#01090B] to-[#003842] overflow-hidden">
+    <body class="font-mono max-w-[1440px] mx-auto items-center h-screen px-2 md:px-8 lg:px-12 bg-gradient-to-b from-[#E9FCFF] to-[#A5EAF6] dark:from-[#01090B] dark:to-[#003842] overflow-hidden">
     <?php require_once __DIR__ . '/layouts/header.php'; ?>
     <div class="text-white lg:mt-2 lg:grid lg:grid-cols-[200px_1fr_fit-content(400px)] lg:gap-6 lg:items-start">
-        <aside class="bg-cyan-950 border border-cyan-400 rounded-md hidden px-2 lg:block">
+        <aside class="bg-[#60E5FD] dark:bg-cyan-950 border-none dark:border border-cyan-400 rounded-md hidden px-2 lg:block">
             <form action="" id="bugtagsForm" class="">
-                <fieldset class="flex flex-col gap-2">
-                    <legend class="py-4 w-full mb-2 text-center border-b border-b-cyan-50 uppercase">Bugtags</legend>
+                <fieldset class="flex flex-col gap-2 text-[#005f70] dark:text-white">
+                    <legend class="py-4 w-full mb-2 text-center border-b border-b-cyan-600 dark:border-b-cyan-50 uppercase">Bugtags</legend>
 
                     <?php if (empty($tags)): ?>
                         <p>Nenhuma tag encontrada</p>
@@ -45,26 +45,26 @@
 
                 <div class="">
                     <a href="#"
-                       class="text-sm px-2 py-1 md:px-4 md:py-2 bg-none border border-cyan-500 rounded-md text-white">Recentes</a>
+                       class="text-sm px-2 py-1 md:px-4 md:py-2 text-cyan-800 bg-[#8FEEFF] dark:bg-transparent dark:border dark:border-cyan-500 rounded-md dark:text-white">Recentes</a>
                     <a href="#"
-                       class="text-sm px-2 py-1 md:px-4 md:py-2 bg-none border border-cyan-500 rounded-md text-white">Em
+                       class="text-sm px-2 py-1 md:px-4 md:py-2 text-cyan-800 bg-[#8feeff] dark:bg-transparent dark:border dark:border-cyan-500 rounded-md dark:text-white">Em
                         alta</a>
                     <a href="#"
-                       class="text-sm px-2 py-1 md:px-4 md:py-2 bg-none border border-cyan-500 rounded-md text-white">Ajuda</a>
+                       class="text-sm px-2 py-1 md:px-4 md:py-2 text-cyan-800 bg-[#8feeff] dark:bg-transparent dark:border dark:border-cyan-500 rounded-md dark:text-white">Ajuda</a>
                     <a href="/post/criar"
                        class="text-sm px-2 py-1 md:px-4 md:py-2 bg-cyan-200 border border-cyan-500 rounded-md text-cyan-800 md:hidden">+</a>
                     <a href="/post/criar"
                        class="text-sm px-2 py-1 md:px-4 md:py-2 bg-cyan-200 border border-cyan-500 rounded-md text-cyan-800 hidden md:inline">Postar</a>
                 </div>
             </section>
-            <main class="overflow-y-auto flex-1 space-y-4 pb-8">
+            <main class="text-[#005f70] dark:text-white overflow-y-auto flex-1 space-y-4 pb-8">
                 <?php if (empty($posts)): ?>
                     <h2 class="t">Nenhum post encontrado</h2>
                 <?php else: ?>
                     <?php foreach ($posts as $post): ?>
                         <article
-                                class="grid grid-cols-[max-content_1fr_max-content] gap-4 gap-y-2 items-center
-                                border-y border-y-cyan-500 md:border md:border-cyan-500 md:rounded-md p-3">
+                                class="bg-white dark:bg-transparent grid grid-cols-[max-content_1fr_max-content] gap-4 gap-y-2 items-center
+                                border-y dark:border-y-cyan-500 md:border border-[#4ad7f0] dark:md:border-cyan-500 md:rounded-md p-3">
 
                             <!--user icon image-->
                             <!--TODO: add user page-->
@@ -81,7 +81,7 @@
                                     <p class="text-sm hover:underline hover:text-cyan-500 transition"><?= htmlspecialchars($post['autor']) ?></p>
                                 </a>
                                 <a href="/post/ver?id=<?= $post['id'] ?>">
-                                    <h2 class="font-bold text-sm md:text-xl hover:underline hover:text-cyan-500
+                                    <h2 class="font-bold text-sm md:text-xl  hover:underline hover:text-cyan-500
                                     transition">
                                         <?= htmlspecialchars($post['titulo']) ?>
                                     </h2>
@@ -126,16 +126,15 @@
                                     </div>
                                 <?php endif; ?>
 
-                                <span class="upvote-count text-white text-sm font-semibold"
+                                <span class="upvote-count text-cyan-400 text-sm font-semibold"
                                       id="upvote_count_<?= $post['id'] ?>">
         <?= $post['upvotes'] ?>
     </span>
                             </div>
 
-
-                            <div class="col-span-3 md:col-span-2 bg-[#092A2F] border border-cyan-500 rounded-md">
+                            <div class="col-span-3 md:col-span-2 bg-[#b0f2fe] dark:bg-[#092A2F] dark:border dark:border-cyan-500 rounded-md">
                                 <a href="">
-                                    <p class="text-sm md:text-lg text-white line-clamp-6 px-2 py-1">
+                                    <p class="text-sm md:text-lg text-[#005f70] dark:text-white line-clamp-6 px-2 py-1">
                                         <?= htmlspecialchars($post['conteudo']) ?>
                                     </p>
                                 </a>

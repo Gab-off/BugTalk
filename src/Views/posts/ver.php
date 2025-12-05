@@ -138,7 +138,7 @@ require_once __DIR__ . '/../layouts/head-visualizar.php';
     }
 </style>
 
-<body class="font-mono max-w-[1440px] mx-auto h-full px-2 md:px-8 lg:px-12">
+<body class="font-mono max-w-[1440px] mx-auto h-full px-2 md:px-8 lg:px-12" data-theme="light">
 
 <?php require_once __DIR__ . '/../layouts/header.php'; ?>
 
@@ -366,8 +366,15 @@ function renderizarComentarios($comentarios, $id_post, $nivel = 0) {
 
     // Detectar tema do sistema ou localStorage (sincronizado com outras páginas)
     window.addEventListener('DOMContentLoaded', function() {
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        document.body.setAttribute('data-theme', savedTheme);
+        const savedTheme = localStorage.getItem('theme');
+
+        if (savedTheme) {
+            document.body.setAttribute('data-theme', savedTheme);
+        } else {
+            // Detectar preferência do sistema
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.body.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+        }
     });
 
     // Escutar mudanças no localStorage (sincronização entre abas)

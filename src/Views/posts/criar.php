@@ -157,8 +157,10 @@ $erro = $_GET['erro'] ?? null;
 <body class="font-mono max-w-[1440px] mx-auto h-full px-2 md:px-8 lg:px-12" data-theme="dark">
 
 <!-- Botão de alternar tema -->
-
-
+<button class="theme-toggle" onclick="toggleTheme()">
+    <span id="theme-icon">☀️</span>
+    <span id="theme-text">Tema Claro</span>
+</button>
 
 <main class="flex flex-col items-center justify-center min-h-screen px-2 py-8">
     <form class="w-full max-w-2xl rounded-xl border-2 form-card p-6 shadow-2xl flex flex-col gap-6"

@@ -144,8 +144,8 @@
                                 <?php if (!empty($post['tags'])): ?>
                                     <?php foreach ($post['tags'] as $tagName): ?>
                                         <!--TODO: (talvez) estruturar o link para fazer pela tag clicada-->
-                                        <a href="#"
-                                           class=" rounded-2xl border border-cyan-700 p-1 text-xs lowercase"><?= htmlspecialchars($tagName) ?></a>
+<!--                                        <a href="#"-->
+<!--                                           class=" rounded-2xl border border-cyan-700 p-1 text-xs lowercase">--><?php //= htmlspecialchars($tagName) ?><!--</a>-->
                                     <?php endforeach; ?>
                                 <?php endif; ?>
                             </div>
@@ -155,7 +155,7 @@
                                    class="flex items-center gap-2 hover:text-cyan-400 transition-colors">
                                     <img src="/assets/imgs/icons/comment.svg" alt="Comentar" class="w-5 h-5">
                                     <!-- TODO: coletar os dados para mostrar-->
-                                    <span class="text-sm">12 <span class="hidden md:inline">comentários</span></span>
+                                    <span class="text-sm"><span class="hidden md:inline">comentários</span></span>
                                 </a>
                             </div>
                         </article>
@@ -165,7 +165,7 @@
         </div>
 
         <div class="hidden border rounded-md border-cyan-300 lg:block lg:justify-self-end px-2 py-4">
-            <h2 class="text-center mb-4 text-cyan-300 font-semibold">Atividades recentes</h2>
+            <h2 class="text-center mb-4 text-cyan-600 font-semibold">Atividades recentes</h2>
             <?php if (empty($atividades)): ?>
                 <p class="text-cyan-100 text-sm">Nenhuma atividade recente</p>
             <?php else: ?>
@@ -175,17 +175,17 @@
                             <img src="/assets/imgs/icons/icon_user.svg" alt="avatar" class="w-full h-full object-cover">
                         </div>
 
-                        <div class="text-xs px-1 text-cyan-100">
+                        <div class="text-xs px-1 text-cyan-700">
                             <p class="">
                                 <a href="/post/ver?id=<?= $atividade['id_alvo'] ?>"
                                    class="text-cyan-400 hover:underline">
                                     <?= htmlspecialchars($atividade['autor']) ?>
                                 </a>
                             </p>
-                            <p class="text-cyan-200">
+                            <p class="text-cyan-800">
                                 <?= htmlspecialchars($atividade['tipo_evento']) ?>
                             </p>
-                            <p class="text-cyan-100 truncate">
+                            <p class="text-cyan-900 truncate">
                                 "<?= htmlspecialchars(substr($atividade['titulo_alvo'], 0, 30)) ?>..."
                             </p>
                         </div>

@@ -1174,8 +1174,17 @@
       color: color-mix(in oklab, var(--color-cyan-500) 50%, transparent);
     }
   }
+  .text-cyan-600 {
+    color: var(--color-cyan-600);
+  }
+  .text-cyan-700 {
+    color: var(--color-cyan-700);
+  }
   .text-cyan-800 {
     color: var(--color-cyan-800);
+  }
+  .text-cyan-900 {
+    color: var(--color-cyan-900);
   }
   .text-cyan-950 {
     color: var(--color-cyan-950);

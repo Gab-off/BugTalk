@@ -1,32 +1,40 @@
 FROM php:8.2-apache
 
-# Instala extensões necessárias (ajuste aqui conforme seu uso)
+# Instala extensões necessárias e dependências do Composer
 RUN apt-get update \
-  && apt-get install -y libssl-dev \
-  && docker-php-ext-install pdo
+  && apt-get install -y \
+    libssl-dev \
+    git \
+    unzip \
+    libzip-dev \
+  && docker-php-ext-install pdo pdo_mysql zip
 
-# Habilita mod_rewrite (para .htaccess e URLs amigáveis)
+# Instala o Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Habilita mod_rewrite
 RUN a2enmod rewrite
 
-# Copia o ponto de entrada web (index.php e assets)
-COPY public/ /var/www/html/
+# Define o diretório de trabalho
+WORKDIR /var/www/html
 
-# Copia as dependências do Composer
-COPY vendor/ /var/www/html/vendor/
+# Copia TODA a estrutura do projeto PRIMEIRO
+COPY . /var/www/html/
 
-# Copia os fontes PHP da aplicação
-COPY src/ /var/www/html/src/
-COPY src/Views/ /var/www/html/Views/
-# Copia o arquivo de ambiente
-COPY .env /var/www/html/.env
+# Instala as dependências do Composer DEPOIS (assim ele lê composer.json do projeto copiado)
+RUN composer install --no-dev --optimize-autoloader
 
+# Configuração SSL
 COPY default-ssl.conf /etc/apache2/sites-available/default-ssl.conf
 RUN a2enmod ssl && a2ensite default-ssl
 
+# Ajusta o DocumentRoot para apontar para /public
+RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|g' /etc/apache2/sites-available/000-default.conf \
+    && sed -i 's|<Directory /var/www/>|<Directory /var/www/html/public/>|g' /etc/apache2/apache2.conf \
+    && sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|g' /etc/apache2/sites-available/default-ssl.conf
 
-# Ajusta permissões (se necessário para ambiente Docker)
+# Ajusta permissões
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html
 
-# (Opcional) Exibe arquivos copiados para debug
-# RUN ls -la /var/www/html/
+EXPOSE 80 443

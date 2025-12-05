@@ -184,15 +184,8 @@ require_once __DIR__ . '/../layouts/head-visualizar.php';
             <?php endif; ?>
 
             <!-- TAGS -->
-            <?php if (!empty($post['tags']) && count($post['tags']) > 0): ?>
-                <div class="flex flex-wrap gap-2 mb-6">
-                    <?php foreach ($post['tags'] as $tag): ?>
-                        <span class="tag-pill px-4 py-1.5 border-2 rounded-full text-sm font-semibold cursor-pointer shadow-sm">
-                            🏷️ <?= htmlspecialchars($tag) ?>
-                        </span>
-                    <?php endforeach; ?>
-                </div>
-            <?php endif; ?>
+
+
 
             <!-- FOOTER COM AÇÕES -->
             <div class="flex gap-3 pt-4 border-t-2 comment-border">
